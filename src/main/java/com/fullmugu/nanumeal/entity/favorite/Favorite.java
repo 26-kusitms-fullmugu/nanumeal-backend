@@ -3,6 +3,7 @@ package com.fullmugu.nanumeal.entity.favorite;
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.entity.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Favorite {
 
     @ManyToOne
     @JoinColumn(name = "id")
-//    @JsonIgnore
+    @JsonIgnore
     private User userId;
 
     @ManyToOne

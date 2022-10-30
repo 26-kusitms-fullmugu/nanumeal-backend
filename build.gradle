@@ -28,6 +28,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    // https://mvnrepository.com/artifact/net.minidev/json-smart
+    implementation group: 'net.minidev', name: 'json-smart', version: '2.4.8'
+
 }
 
 tasks.named('test') {
