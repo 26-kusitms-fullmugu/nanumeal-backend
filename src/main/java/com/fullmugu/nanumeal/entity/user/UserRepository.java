@@ -1,2 +1,7 @@
-package com.fullmugu.nanumeal.entity.user;public interface UserRepository {
+package com.fullmugu.nanumeal.entity.user;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
 }
