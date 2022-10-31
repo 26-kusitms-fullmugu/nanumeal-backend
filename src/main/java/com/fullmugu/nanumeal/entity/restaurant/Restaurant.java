@@ -5,6 +5,7 @@ import com.fullmugu.nanumeal.entity.favorite.Favorite;
 import com.fullmugu.nanumeal.entity.hsitory.History;
 import com.fullmugu.nanumeal.entity.menu.Menu;
 import com.fullmugu.nanumeal.entity.thkmsg.ThxMsg;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -12,6 +13,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
