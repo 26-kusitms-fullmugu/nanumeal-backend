@@ -18,6 +18,10 @@ spring:
       hibernate: # hibernate property 설정
         format_sql: true
 
+  config:
+    import:
+      - classpath:/application-kakao.yml
+
 # 로그 레벨 설정
 logging:
   level:
