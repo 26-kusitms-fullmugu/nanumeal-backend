@@ -2,7 +2,7 @@ package com.fullmugu.nanumeal.entity.user;
 
 import com.fullmugu.nanumeal.entity.donation.Donation;
 import com.fullmugu.nanumeal.entity.favorite.Favorite;
-import com.fullmugu.nanumeal.entity.hsitory.History;
+import com.fullmugu.nanumeal.entity.history.History;
 import com.fullmugu.nanumeal.entity.thkmsg.ThxMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

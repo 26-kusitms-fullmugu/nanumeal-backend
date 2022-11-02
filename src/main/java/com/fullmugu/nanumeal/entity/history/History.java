@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.hsitory;
+package com.fullmugu.nanumeal.entity.history;
 
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.entity.user.User;
