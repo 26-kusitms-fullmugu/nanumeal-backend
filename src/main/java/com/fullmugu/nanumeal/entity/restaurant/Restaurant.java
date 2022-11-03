@@ -2,8 +2,9 @@ package com.fullmugu.nanumeal.entity.restaurant;
 
 import com.fullmugu.nanumeal.entity.donation.Donation;
 import com.fullmugu.nanumeal.entity.favorite.Favorite;
-import com.fullmugu.nanumeal.entity.hsitory.History;
+//import com.fullmugu.nanumeal.entity.record.History;
 import com.fullmugu.nanumeal.entity.menu.Menu;
+import com.fullmugu.nanumeal.entity.history.History;
 import com.fullmugu.nanumeal.entity.thkmsg.ThxMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "restaurantId")
     private Long id;
 
     @Column(nullable = false, length = 255)

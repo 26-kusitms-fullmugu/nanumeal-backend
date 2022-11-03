@@ -2,6 +2,7 @@ package com.fullmugu.nanumeal.entity.menu;
 
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -14,10 +15,12 @@ import javax.persistence.*;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menuId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "restaurantId")
+    @JsonIgnore
     private Restaurant restaurantId;
 
     @Column(nullable = false, length = 255)

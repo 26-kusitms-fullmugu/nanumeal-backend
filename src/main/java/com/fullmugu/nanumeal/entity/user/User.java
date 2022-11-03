@@ -2,7 +2,8 @@ package com.fullmugu.nanumeal.entity.user;
 
 import com.fullmugu.nanumeal.entity.donation.Donation;
 import com.fullmugu.nanumeal.entity.favorite.Favorite;
-import com.fullmugu.nanumeal.entity.hsitory.History;
+//import com.fullmugu.nanumeal.entity.hsitory.History;
+import com.fullmugu.nanumeal.entity.history.History;
 import com.fullmugu.nanumeal.entity.thkmsg.ThxMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,14 +23,16 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     private Long id;
 
     @Column(nullable = false, length = 255, unique = true)
-    private String userId;
+    private String userName;
 
     @Column(nullable = false, length = 255)
     private String password;

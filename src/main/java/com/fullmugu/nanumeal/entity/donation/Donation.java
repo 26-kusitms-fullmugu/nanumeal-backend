@@ -3,6 +3,7 @@ package com.fullmugu.nanumeal.entity.donation;
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.entity.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -19,16 +20,17 @@ public class Donation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "donationId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-//    @JsonIgnore
+//    @JoinColumn(name = "id")
+    @JsonIgnore
     private User donateUserId;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-//    @JsonIgnore
+    @JoinColumn(name = "restaurantId")
+    @JsonIgnore
     private Restaurant restaurantId;
 
     @Column(nullable = false)

@@ -19,15 +19,16 @@ public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "favoriteId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "userId")
     @JsonIgnore
     private User userId;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurantId;
 
     @CreatedDate

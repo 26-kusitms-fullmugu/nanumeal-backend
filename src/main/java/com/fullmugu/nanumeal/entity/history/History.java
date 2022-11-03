@@ -1,8 +1,9 @@
-package com.fullmugu.nanumeal.entity.hsitory;
+package com.fullmugu.nanumeal.entity.history;
 
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.entity.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -18,15 +19,17 @@ public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "historyId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-//    @JsonIgnore
+    @JoinColumn(name = "userId")
+    @JsonIgnore
     private User userId;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "restaurantId")
+    @JsonIgnore
     private Restaurant restaurantId;
 
     @Column(nullable = false)

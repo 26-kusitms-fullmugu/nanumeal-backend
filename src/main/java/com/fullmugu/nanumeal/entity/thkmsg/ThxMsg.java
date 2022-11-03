@@ -3,6 +3,7 @@ package com.fullmugu.nanumeal.entity.thkmsg;
 import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.entity.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -18,16 +19,17 @@ public class ThxMsg {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "thxMsgId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-//    @JsonIgnore
+    @JoinColumn(name = "userId")
+    @JsonIgnore
     private User childId;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-//    @JsonIgnore
+    @JoinColumn(name = "restaurantId")
+    @JsonIgnore
     private Restaurant resId;
 
     @Column(nullable = false, length = 255)
