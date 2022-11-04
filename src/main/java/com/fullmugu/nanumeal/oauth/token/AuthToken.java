@@ -12,7 +12,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class AuthToken {
 
-    private static final String AUTHROITIES_KEY = "role";
+    private static final String AUTHORITIES_KEY = "role";
     @Getter
     private final String token;
     private final Key key;
@@ -38,7 +38,7 @@ public class AuthToken {
     private String createAuthToken(String id, String role, Date expiry) {
         return Jwts.builder()
                 .setSubject(id)
-                .claim(AUTHROITIES_KEY, role)
+                .claim(AUTHORITIES_KEY, role)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(expiry)
                 .compact();
