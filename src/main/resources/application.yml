@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   h2:
     console:
       enabled: true
@@ -20,10 +22,12 @@ spring:
     properties: # property 사용 설정
       hibernate: # hibernate property 설정
         format_sql: true
+    show-sql: true
 
   config:
     import:
       - classpath:/application-kakao.yml
+      - classpath:/application-security.yml
 
 # 로그 레벨 설정
 logging:
@@ -32,6 +36,6 @@ logging:
     # jpa hibernate가 생성하는 sql이 로거를 통해서 찍히도록 하는 설정
     org.hibernate.SQL: debug
     org.hibernate.type: trace # 실제 들어가는 파라미터값 찍어주는 설정
+
 server:
   port: 8080
-
