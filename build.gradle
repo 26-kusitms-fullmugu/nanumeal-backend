@@ -31,6 +31,10 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     // https://mvnrepository.com/artifact/net.minidev/json-smart
     implementation group: 'net.minidev', name: 'json-smart', version: '2.4.8'
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
 
 }
 

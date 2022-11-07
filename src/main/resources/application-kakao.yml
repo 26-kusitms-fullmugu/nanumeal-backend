@@ -1,0 +1,19 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: d041b6f16d3bc4f0a3bc384015073302
+            client-secret: vZgr0RMvRVWSsMHG7WnZbs7jyZSuA9Zy
+            # 닉네임이랑 email만 갖고 오기
+            scope: profile_nickname, account_email
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/ouath2/code/kakao
+            client-authentication-method: POST
+        provider:
+          kakao:
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
