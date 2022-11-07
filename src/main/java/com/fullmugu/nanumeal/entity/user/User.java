@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false, length = 255, unique = true)
-    private String userName;
+    private String email;
 
     @Column(nullable = false, length = 255)
     private String password;
@@ -46,8 +46,8 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 255)
     private String location;
 
-    @Column(nullable = false, length = 255)
-    private String email;
+    @Column(nullable = false, length = 255, unique = true)
+    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private Type type;
