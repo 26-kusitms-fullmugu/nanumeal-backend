@@ -30,22 +30,22 @@ public class User implements UserDetails {
     @Column(name = "userId")
     private Long id;
 
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(length = 255, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String name;
 
-    @Column(nullable = false)
+    @Column()
     private Long age;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String location;
-    @Column(nullable = false, length = 255, unique = true)
-    private String nickName;
+    @Column(length = 255, unique = true)
+    private String username;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -114,9 +114,10 @@ public class User implements UserDetails {
     }
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String email, String password, Role role, String provider, String providerId) {
-        this.email = email;
+    public User(String username, String email, String password, Role role, String provider, String providerId) {
+        this.username = username;
         this.password = password;
+        this.email = email;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
