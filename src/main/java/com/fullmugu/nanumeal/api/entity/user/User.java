@@ -44,7 +44,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false, length = 255)
     private String location;
-
     @Column(nullable = false, length = 255, unique = true)
     private String nickName;
 
@@ -59,7 +58,10 @@ public class User implements UserDetails {
     @Column(name = "moddate")
     private LocalDateTime modDate;
 
-//    연관관계의 주인은 FK를 가진 쪽.
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    //    연관관계의 주인은 FK를 가진 쪽.
     @OneToMany(mappedBy = "childId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ThxMsg> thxMsgs = new ArrayList<>();
 
@@ -107,4 +109,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
 }
