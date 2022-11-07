@@ -4,6 +4,8 @@ import com.fullmugu.nanumeal.api.entity.user.Role;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
 import com.fullmugu.nanumeal.oauth.entity.PrincipalDetails;
+import com.fullmugu.nanumeal.oauth.info.OAuth2UserInfo;
+import com.fullmugu.nanumeal.oauth.info.impl.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -26,31 +28,36 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String provider = userRequest.getClientRegistration().getRegistrationId();    //google
-        String providerId = oAuth2User.getAttribute("sub");
-        String username = provider + "_" + providerId;            // 사용자가 입력한 적은 없지만 만들어준다
+        OAuth2UserInfo oAuth2UserInfo = null;    //추가
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+
+        //추가
+        if (provider.equals("kakao")) {
+            oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
+        }
+
+        assert oAuth2UserInfo != null;
+        String providerId = oAuth2UserInfo.getProviderId();    //수정
+        String username = provider + "_" + providerId;
 
         String uuid = UUID.randomUUID().toString().substring(0, 6);
-        String password = bCryptPasswordEncoder.encode("패스워드" + uuid);  // 사용자가 입력한 적은 없지만 만들어준다
+        String password = bCryptPasswordEncoder.encode("패스워드" + uuid);
 
-        String email = oAuth2User.getAttribute("email");
+        String email = oAuth2UserInfo.getEmail();    //수정
         Role role = Role.ROLE_USER;
 
-        User byUsername = userRepository.findByEmail(username);
+        User byUsername = userRepository.findByUsername(username);
 
         //DB에 없는 사용자라면 회원가입처리
         if (byUsername == null) {
             byUsername = User.oauth2Register()
-                    .email(email)
-                    .password(password)
-                    .role(role)
-                    .provider(provider)
-                    .providerId(providerId)
+                    .username(username).password(password).email(email).role(role)
+                    .provider(provider).providerId(providerId)
                     .build();
             userRepository.save(byUsername);
         }
 
-        return new PrincipalDetails(byUsername, oAuth2User.getAttributes());
+        return new PrincipalDetails(byUsername, oAuth2UserInfo);    //수정
     }
 }
 
