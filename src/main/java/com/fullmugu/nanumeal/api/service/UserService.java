@@ -3,6 +3,7 @@ package com.fullmugu.nanumeal.api.service;
 import com.fullmugu.nanumeal.api.dto.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 
+
 public interface UserService {
 
 //    유저정보 조회
