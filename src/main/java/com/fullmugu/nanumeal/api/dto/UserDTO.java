@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.api.dto;
 
+import com.fullmugu.nanumeal.api.entity.user.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +25,11 @@ public class UserDTO {
 
     private String passWord;
 
-    private String age;
+    private Long age;
 
     private String location;
+
+    private Type type;
+
 
 }
