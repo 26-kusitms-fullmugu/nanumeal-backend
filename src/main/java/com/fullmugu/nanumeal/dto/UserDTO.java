@@ -29,6 +29,4 @@ public class UserDTO {
 
     private String location;
 
-
-
 }

@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+src/main/resources/application-kakao.yml
+src/main/resources/application-security.yml
+
