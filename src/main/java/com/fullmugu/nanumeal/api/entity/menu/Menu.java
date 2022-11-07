@@ -1,6 +1,6 @@
-package com.fullmugu.nanumeal.entity.menu;
+package com.fullmugu.nanumeal.api.entity.menu;
 
-import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
+import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 

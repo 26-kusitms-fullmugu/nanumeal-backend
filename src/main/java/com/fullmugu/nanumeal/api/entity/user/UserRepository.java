@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.user;
+package com.fullmugu.nanumeal.api.entity.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

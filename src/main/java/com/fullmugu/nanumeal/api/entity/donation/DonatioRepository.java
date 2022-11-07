@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.donation;
+package com.fullmugu.nanumeal.api.entity.donation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

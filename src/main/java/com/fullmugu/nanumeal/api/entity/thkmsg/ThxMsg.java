@@ -1,7 +1,7 @@
-package com.fullmugu.nanumeal.entity.favorite;
+package com.fullmugu.nanumeal.api.entity.thkmsg;
 
-import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
-import com.fullmugu.nanumeal.entity.user.User;
+import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
+import com.fullmugu.nanumeal.api.entity.user.User;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,29 +11,34 @@ import java.time.LocalDateTime;
 
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class Favorite {
+public class ThxMsg {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favoriteId")
+    @Column(name = "thxMsgId")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnore
-    private User userId;
+    private User childId;
 
     @ManyToOne
     @JoinColumn(name = "restaurantId")
-    private Restaurant restaurantId;
+    @JsonIgnore
+    private Restaurant resId;
+
+    @Column(nullable = false, length = 255)
+    private String message;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime regDate;
+
 
 
 }

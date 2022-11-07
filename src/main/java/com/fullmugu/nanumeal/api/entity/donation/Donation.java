@@ -1,7 +1,7 @@
-package com.fullmugu.nanumeal.entity.thkmsg;
+package com.fullmugu.nanumeal.api.entity.donation;
 
-import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
-import com.fullmugu.nanumeal.entity.user.User;
+import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
+import com.fullmugu.nanumeal.api.entity.user.User;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,35 +10,37 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
-public class ThxMsg {
+public class Donation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "thxMsgId")
+    @Column(name = "donationId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+//    @JoinColumn(name = "id")
     @JsonIgnore
-    private User childId;
+    private User donateUserId;
 
     @ManyToOne
     @JoinColumn(name = "restaurantId")
     @JsonIgnore
-    private Restaurant resId;
+    private Restaurant restaurantId;
 
-    @Column(nullable = false, length = 255)
-    private String message;
+    @Column(nullable = false)
+    private Long donPrice;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime regDate;
 
-
+//    메시지 수령여부
+    @Column(nullable = false)
+    private Boolean isThanked;
 
 }
