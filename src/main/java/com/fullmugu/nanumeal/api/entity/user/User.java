@@ -1,10 +1,9 @@
-package com.fullmugu.nanumeal.entity.user;
+package com.fullmugu.nanumeal.api.entity.user;
 
-import com.fullmugu.nanumeal.entity.donation.Donation;
-import com.fullmugu.nanumeal.entity.favorite.Favorite;
-//import com.fullmugu.nanumeal.entity.hsitory.History;
-import com.fullmugu.nanumeal.entity.history.History;
-import com.fullmugu.nanumeal.entity.thkmsg.ThxMsg;
+import com.fullmugu.nanumeal.api.entity.donation.Donation;
+import com.fullmugu.nanumeal.api.entity.favorite.Favorite;
+import com.fullmugu.nanumeal.api.entity.history.History;
+import com.fullmugu.nanumeal.api.entity.thkmsg.ThxMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

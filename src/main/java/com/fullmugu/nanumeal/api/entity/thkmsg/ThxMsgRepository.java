@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.thkmsg;
+package com.fullmugu.nanumeal.api.entity.thkmsg;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.restaurant;
+package com.fullmugu.nanumeal.api.entity.restaurant;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

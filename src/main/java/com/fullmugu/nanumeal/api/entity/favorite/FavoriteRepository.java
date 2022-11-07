@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.favorite;
+package com.fullmugu.nanumeal.api.entity.favorite;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

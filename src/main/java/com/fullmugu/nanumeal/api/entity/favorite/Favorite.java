@@ -1,7 +1,7 @@
-package com.fullmugu.nanumeal.entity.history;
+package com.fullmugu.nanumeal.api.entity.favorite;
 
-import com.fullmugu.nanumeal.entity.restaurant.Restaurant;
-import com.fullmugu.nanumeal.entity.user.User;
+import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
+import com.fullmugu.nanumeal.api.entity.user.User;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,16 +10,16 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @Setter
-public class History {
+public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historyId")
+    @Column(name = "favoriteId")
     private Long id;
 
     @ManyToOne
@@ -29,16 +29,11 @@ public class History {
 
     @ManyToOne
     @JoinColumn(name = "restaurantId")
-    @JsonIgnore
     private Restaurant restaurantId;
-
-    @Column(nullable = false)
-    private Long usePrice;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime regDate;
 
+
 }
-
-

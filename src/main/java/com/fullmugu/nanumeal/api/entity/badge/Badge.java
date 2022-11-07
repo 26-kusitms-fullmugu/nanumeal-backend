@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.badge;
+package com.fullmugu.nanumeal.api.entity.badge;
 
 import lombok.*;
 

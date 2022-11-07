@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.entity.history;
+package com.fullmugu.nanumeal.api.entity.history;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
