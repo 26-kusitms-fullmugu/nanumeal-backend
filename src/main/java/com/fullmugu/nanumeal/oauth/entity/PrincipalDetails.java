@@ -1,6 +1,7 @@
 package com.fullmugu.nanumeal.oauth.entity;
 
 import com.fullmugu.nanumeal.api.entity.user.User;
+import com.fullmugu.nanumeal.oauth.info.OAuth2UserInfo;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +17,8 @@ import java.util.Map;
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
-    private Map<String, Object> attributes;
+    //private Map<String, Object> attributes;
+    private OAuth2UserInfo oAuth2UserInfo;
 
     //UserDetails : Form 로그인 시 사용
     public PrincipalDetails(User user) {
@@ -24,11 +26,17 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     }
 
     //OAuth2User : OAuth2 로그인 시 사용
-    public PrincipalDetails(User user, Map<String, Object> attributes) {
-        //PrincipalOauth2UserService 참고
+    //public PrincipalDetails(User user, Map<String, Object> attributes) {
+    //    //PrincipalOauth2UserService 참고
+    //    this.user = user;
+    //    this.attributes = attributes;
+    //}
+
+    public PrincipalDetails(User user, OAuth2UserInfo oAuth2UserInfo) {
         this.user = user;
-        this.attributes = attributes;
+        this.oAuth2UserInfo = oAuth2UserInfo;
     }
+
 
     /**
      * UserDetails 구현
@@ -79,8 +87,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     /**
      * UserDetails 구현
      * 계정 잠김 여부
-     * true : 잠기지 않음
-     * false : 잠김
+     *  true : 잠기지 않음
+     *  false : 잠김
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -90,8 +98,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     /**
      * UserDetails 구현
      * 계정 비밀번호 만료 여부
-     * true : 만료 안됨
-     * false : 만료됨
+     *  true : 만료 안됨
+     *  false : 만료됨
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -101,8 +109,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     /**
      * UserDetails 구현
      * 계정 활성화 여부
-     * true : 활성화됨
-     * false : 활성화 안됨
+     *  true : 활성화됨
+     *  false : 활성화 안됨
      */
     @Override
     public boolean isEnabled() {
@@ -112,22 +120,22 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     /**
      * OAuth2User 구현
-     *
      * @return
      */
     @Override
     public Map<String, Object> getAttributes() {
-        return attributes;
+        //return attributes;
+        return oAuth2UserInfo.getAttributes();
     }
 
     /**
      * OAuth2User 구현
-     *
      * @return
      */
     @Override
     public String getName() {
-        String sub = attributes.get("sub").toString();
-        return sub;
+        //String sub = attributes.get("sub").toString();
+        //return sub;
+        return oAuth2UserInfo.getProviderId();
     }
 }
