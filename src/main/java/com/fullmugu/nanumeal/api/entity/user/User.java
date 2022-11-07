@@ -57,9 +57,12 @@ public class User implements UserDetails {
     @LastModifiedDate
     @Column(name = "moddate")
     private LocalDateTime modDate;
-
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private String provider;
+
+    private String providerId;
 
     //    연관관계의 주인은 FK를 가진 쪽.
     @OneToMany(mappedBy = "childId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -111,10 +114,12 @@ public class User implements UserDetails {
     }
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String email, String password, Role role) {
+    public User(String email, String password, Role role, String provider, String providerId) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 
 }
