@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @Column(name = "userId")
     private Long id;
 
+    @Column()
+    private Long kakaoId; // 카카오에서 주는 시퀀스 넘버
+
     @Column(length = 255, unique = true)
     private String email;
 
