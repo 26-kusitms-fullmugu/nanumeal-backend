@@ -2,7 +2,10 @@ package com.fullmugu.nanumeal.oauth.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fullmugu.nanumeal.api.entity.user.Role;
+import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.oauth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.oauth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -20,6 +23,54 @@ public class AuthService {
 
     private final UserRepository userRepository; //(1)
 
+    public User saveUser(String token) {
+        KakaoProfileDto profile = findProfile(token);
+
+        User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
+
+        if (user == null) {
+            user = User.builder()
+                    .kakaoId(profile.getId())
+                    .name(profile.getKakao_account().getProfile().getNickname())
+                    .email(profile.getKakao_account().getEmail())
+                    .role(Role.ROLE_USER).build();
+
+            userRepository.save(user);
+        }
+
+        return user;
+    }
+
+    public KakaoProfileDto findProfile(String token) {
+        RestTemplate rt = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token); //(1-4)
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest =
+                new HttpEntity<>(headers);
+
+        // Http 요청 (POST 방식) 후, response 변수에 응답을 받음
+        ResponseEntity<String> kakaoProfileResponse = rt.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoProfileDto profileDto = null;
+        try {
+            profileDto = objectMapper.readValue(kakaoProfileResponse.getBody(), KakaoProfileDto.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return profileDto;
+
+    }
+
     public OAuthToken getAccessToken(String code) {
 
         //(2)
@@ -32,10 +83,10 @@ public class AuthService {
         //(4)
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "{클라이언트 앱 키}");
-        params.add("redirect_uri", "{리다이렉트 uri}");
+        params.add("client_id", "d041b6f16d3bc4f0a3bc384015073302");
+        params.add("redirect_uri", "http://localhost:8080/login/oauth2/code/kakao");
         params.add("code", code);
-        params.add("client_secret", "{시크릿 키}"); // 생략 가능!
+        params.add("client_secret", "vZgr0RMvRVWSsMHG7WnZbs7jyZSuA9Zy"); // 생략 가능!
 
         //(5)
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
