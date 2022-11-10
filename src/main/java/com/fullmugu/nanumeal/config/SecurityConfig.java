@@ -1,16 +1,23 @@
 package com.fullmugu.nanumeal.config;
 
+import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.oauth.jwt.CustomAuthenticationEntryPoint;
+import com.fullmugu.nanumeal.oauth.jwt.JwtRequestFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserRepository userRepository;
 
 //    @Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
@@ -52,10 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 가입 및 인증 주소는 누구나 접근 가능
                 .anyRequest().hasRole("USER")
                 // 그 외 나머지 요청은 모두 인증된 회원만 접근 가능
-                .and();
-//                .exceptionHandling()
-//                .authenticationEntryPoint()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 //                .accessDeniedHandler()
+
+        http.addFilterBefore(new JwtRequestFilter(userRepository), UsernamePasswordAuthenticationFilter.class);
 
     }
 
