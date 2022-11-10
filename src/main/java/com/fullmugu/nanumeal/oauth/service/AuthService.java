@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -124,6 +125,13 @@ public class AuthService {
         }
 
         return oAuthToken; //(8)
+    }
+
+    public User getUser(HttpServletRequest request) {
+
+        Long id = (Long) request.getAttribute("id");
+
+        return userRepository.findById(id).orElseThrow();
     }
 }
 
