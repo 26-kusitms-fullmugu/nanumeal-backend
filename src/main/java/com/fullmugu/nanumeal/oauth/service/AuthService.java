@@ -81,8 +81,8 @@ public class AuthService {
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .withClaim("id", user.getId())
-                .withClaim("nickname", user.getName())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET)); //(2-6)
+                .withClaim("nickname", user.getName()) // claim은 User pk와 카카오 이름만 넣었음
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
     }
 
     public OAuthToken getAccessToken(String code) {
