@@ -1,11 +1,14 @@
 package com.fullmugu.nanumeal.oauth.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullmugu.nanumeal.api.entity.user.Role;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
 import com.fullmugu.nanumeal.oauth.dto.KakaoProfileDto;
+import com.fullmugu.nanumeal.oauth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.oauth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -17,17 +20,18 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
 
     private final UserRepository userRepository; //(1)
 
-    public User saveUser(String token) {
+    public String saveUserAndGetToken(String token) { //(1)
         KakaoProfileDto profile = findProfile(token);
 
         User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
-
         if (user == null) {
             user = User.builder()
                     .kakaoId(profile.getId())
@@ -38,7 +42,7 @@ public class AuthService {
             userRepository.save(user);
         }
 
-        return user;
+        return createToken(user); //(2)
     }
 
     public KakaoProfileDto findProfile(String token) {
@@ -69,6 +73,16 @@ public class AuthService {
 
         return profileDto;
 
+    }
+
+    public String createToken(User user) {
+
+        return JWT.create()
+                .withSubject(user.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withClaim("id", user.getId())
+                .withClaim("nickname", user.getName())
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET)); //(2-6)
     }
 
     public OAuthToken getAccessToken(String code) {
