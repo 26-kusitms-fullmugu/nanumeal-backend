@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.oauth.controller;
 
+import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.oauth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.oauth.service.AuthService;
 import com.fullmugu.nanumeal.oauth.token.OAuthToken;
@@ -7,16 +8,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/oauth/token")
+    @GetMapping("/token")
     public ResponseEntity getLogin(@RequestParam("code") String code) { //(1)
 
         // 넘어온 인가 코드를 통해 access_token 발급
@@ -32,5 +37,15 @@ public class AuthController {
 
         //(4)
         return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) { //(1)
+
+        //(2)
+        User user = authService.getUser(request);
+
+        //(3)
+        return ResponseEntity.ok().body(user);
     }
 }
