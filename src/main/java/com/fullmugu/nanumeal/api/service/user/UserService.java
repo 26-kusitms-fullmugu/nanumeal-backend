@@ -1,6 +1,6 @@
-package com.fullmugu.nanumeal.api.service;
+package com.fullmugu.nanumeal.api.service.user;
 
-import com.fullmugu.nanumeal.api.dto.UserDTO;
+import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 
 
