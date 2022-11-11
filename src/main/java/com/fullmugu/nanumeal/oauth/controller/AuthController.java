@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/token")
-    public ResponseEntity getLogin(@RequestParam("code") String code) { //(1)
+    public ResponseEntity<String> getLogin(@RequestParam("code") String code) { //(1)
 
         // 넘어온 인가 코드를 통해 access_token 발급
         OAuthToken oAuthToken = authService.getAccessToken(code);
