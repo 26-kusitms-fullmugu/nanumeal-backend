@@ -3,7 +3,7 @@ package com.fullmugu.nanumeal.api.entity.user;
 import com.fullmugu.nanumeal.api.entity.donation.Donation;
 import com.fullmugu.nanumeal.api.entity.favorite.Favorite;
 import com.fullmugu.nanumeal.api.entity.history.History;
-import com.fullmugu.nanumeal.api.entity.thkmsg.ThxMsg;
+import com.fullmugu.nanumeal.api.entity.thkmsg.ThkMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -61,7 +61,7 @@ public class User implements UserDetails {
 
 //    연관관계의 주인은 FK를 가진 쪽.
     @OneToMany(mappedBy = "childId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ThxMsg> thxMsgs = new ArrayList<>();
+    private List<ThkMsg> thkMsgs = new ArrayList<>();
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<History> histories = new ArrayList<>();
