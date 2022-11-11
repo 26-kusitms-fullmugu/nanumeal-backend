@@ -11,6 +11,7 @@ import com.fullmugu.nanumeal.oauth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.oauth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.oauth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,6 +28,9 @@ import java.util.Date;
 public class AuthService {
 
     private final UserRepository userRepository;
+
+    @Value("${jwt.secret}")
+    private String SECRET;
 
     public String saveUserAndGetToken(String token) {
         KakaoProfileDto profile = findProfile(token);
@@ -87,7 +91,7 @@ public class AuthService {
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .withClaim("id", user.getId())
                 .withClaim("nickname", user.getName()) // claim은 User pk와 카카오 이름만 넣었음
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+                .sign(Algorithm.HMAC512(SECRET));
     }
 
     public OAuthToken getAccessToken(String code) {
