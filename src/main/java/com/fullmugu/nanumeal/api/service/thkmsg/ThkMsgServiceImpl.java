@@ -28,5 +28,6 @@ public class ThkMsgServiceImpl implements ThkMsgService {
                 .map(thkMsg -> entityToDTO(thkMsg)).collect(Collectors.toList());
 
         return thkMsgDTOList;
+
     }
 }
