@@ -114,6 +114,10 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void generatePassword() {
+        this.password += this.id;
+    }
+
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
     public User(Long kakaoId, String username, String email, String password, Role role, String provider) {
         this.kakaoId = kakaoId;
