@@ -20,25 +20,27 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
 public class AuthService {
 
-    private final UserRepository userRepository; //(1)
+    private final UserRepository userRepository;
 
-    public String saveUserAndGetToken(String token) { //(1)
+    public String saveUserAndGetToken(String token) {
         KakaoProfileDto profile = findProfile(token);
 
         User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
         if (user == null) {
-            user = User.builder()
+            user = User.oauth2Register()
                     .kakaoId(profile.getId())
-                    .name(profile.getKakao_account().getProfile().getNickname())
+                    .username(profile.getKakao_account().getProfile().getNickname())
+                    .password("Kakao" + profile.getId() + user.getId())
                     .email(profile.getKakao_account().getEmail())
-                    .role(Role.ROLE_USER).build();
+                    .role(Role.ROLE_USER)
+                    .provider("Kakao")
+                    .build();
 
             userRepository.save(user);
         }
@@ -125,13 +127,6 @@ public class AuthService {
         }
 
         return oAuthToken; //(8)
-    }
-
-    public User getUser(HttpServletRequest request) {
-
-        Long id = (Long) request.getAttribute("id");
-
-        return userRepository.findById(id).orElseThrow();
     }
 }
 
