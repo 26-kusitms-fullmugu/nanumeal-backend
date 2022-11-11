@@ -48,15 +48,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
                     .getClaim("id").asLong();
         } catch (TokenExpiredException e) {
+            log.info("토큰 만료");
             e.printStackTrace();
             request.setAttribute(JwtProperties.HEADER_STRING, "토큰이 만료되었습니다.");
         } catch (JWTVerificationException e) {
+            log.info("토큰 유효 X");
             e.printStackTrace();
             request.setAttribute(JwtProperties.HEADER_STRING, "유효하지 않은 토큰입니다.");
         }
 
+        if (id == null) {
+            log.info("id 값이 존재하지 않습니다.");
+        }
+
         // Service를 통해 id값이 존재하는지 검증
-        if (userService.getUserById(id) == null) {
+        else if (userService.getUserById(id) == null) {
             log.info(id + "번 사용자는 존재하지 않습니다.");
             request.setAttribute(JwtProperties.HEADER_STRING, "존재하지 않는 사용자입니다.");
         } else {
