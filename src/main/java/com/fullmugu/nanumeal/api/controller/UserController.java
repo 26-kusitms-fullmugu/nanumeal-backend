@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.api.controller;
 
+import com.fullmugu.nanumeal.api.dto.UserInfoResponseDto;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/info")
-    public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) {
+    public ResponseEntity<UserInfoResponseDto> getCurrentUser(HttpServletRequest request) {
 
 
         User user = userService.getUser(request);
 
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(UserInfoResponseDto.from(user));
     }
 }
