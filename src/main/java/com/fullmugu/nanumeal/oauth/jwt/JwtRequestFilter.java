@@ -4,8 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.api.entity.user.User;
+import com.fullmugu.nanumeal.api.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,10 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
+@Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -41,7 +47,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         try {
             id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
                     .getClaim("id").asLong();
-
         } catch (TokenExpiredException e) {
             e.printStackTrace();
             request.setAttribute(JwtProperties.HEADER_STRING, "토큰이 만료되었습니다.");
@@ -50,8 +55,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             request.setAttribute(JwtProperties.HEADER_STRING, "유효하지 않은 토큰입니다.");
         }
 
-        // 검증 완료 후 userCode로 값 넘김
-        request.setAttribute("id", id);
+        // Service를 통해 id값이 존재하는지 검증
+        if (userService.getUserById(id) == null) {
+            log.info(id + "번 사용자는 존재하지 않습니다.");
+            request.setAttribute(JwtProperties.HEADER_STRING, "존재하지 않는 사용자입니다.");
+        } else {
+            request.setAttribute("id", id);
+            User user = userService.getUserById(id);
+            UserDetails principal = org.springframework.security.core.userdetails.User
+                    .withUsername(user.getEmail())
+                    .password(user.getPassword())
+                    .authorities(user.getRole())
+                    .accountExpired(false)
+                    .accountLocked(false)
+                    .credentialsExpired(false)
+                    .disabled(false)
+                    .build();
+
+            SecurityContextHolder
+                    .getContext()
+                    .setAuthentication(new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities()));
+        }
 
         // filterChain에 값 넘김
         filterChain.doFilter(request, response);
