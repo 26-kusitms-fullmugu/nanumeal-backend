@@ -4,7 +4,7 @@ import com.fullmugu.nanumeal.api.entity.donation.Donation;
 import com.fullmugu.nanumeal.api.entity.favorite.Favorite;
 import com.fullmugu.nanumeal.api.entity.history.History;
 import com.fullmugu.nanumeal.api.entity.menu.Menu;
-import com.fullmugu.nanumeal.api.entity.thkmsg.ThxMsg;
+import com.fullmugu.nanumeal.api.entity.thkmsg.ThkMsg;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -54,7 +54,7 @@ public class Restaurant {
     private List<Menu> menus = new ArrayList<>();
 
     @OneToMany(mappedBy = "resId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ThxMsg> thxMsgs = new ArrayList<>();
+    private List<ThkMsg> thkMsgs = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurantId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<History> histories = new ArrayList<>();
