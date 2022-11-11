@@ -65,8 +65,6 @@ public class User implements UserDetails {
 
     private String provider;
 
-    private String providerId;
-
     //    연관관계의 주인은 FK를 가진 쪽.
     @OneToMany(mappedBy = "childId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ThxMsg> thxMsgs = new ArrayList<>();
@@ -117,13 +115,13 @@ public class User implements UserDetails {
     }
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String username, String email, String password, Role role, String provider, String providerId) {
+    public User(Long kakaoId, String username, String email, String password, Role role, String provider) {
+        this.kakaoId = kakaoId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
         this.provider = provider;
-        this.providerId = providerId;
     }
 
 }
