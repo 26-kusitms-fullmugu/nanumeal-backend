@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.oauth.jwt;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
         // exception 값 받아오기
         String exception = (String) request.getAttribute(JwtProperties.HEADER_STRING);
+        if (exception == null) {
+            log.info("Value for Authorization is null.");
+            return;
+        }
         String errorCode;
 
         if (exception.equals("토큰이 만료되었습니다.")) {
