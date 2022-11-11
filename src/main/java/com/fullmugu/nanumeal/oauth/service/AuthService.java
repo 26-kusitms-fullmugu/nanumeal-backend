@@ -36,13 +36,15 @@ public class AuthService {
             user = User.oauth2Register()
                     .kakaoId(profile.getId())
                     .username(profile.getKakao_account().getProfile().getNickname())
-                    .password("Kakao" + profile.getId() + user.getId())
+                    .password("Kakao" + profile.getId())
                     .email(profile.getKakao_account().getEmail())
                     .role(Role.ROLE_USER)
                     .provider("Kakao")
                     .build();
 
             userRepository.save(user);
+            user.generatePassword();
+            userRepository.saveAndFlush(user);
         }
 
         return createToken(user); //(2)
