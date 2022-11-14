@@ -1,0 +1,20 @@
+package com.fullmugu.nanumeal.api.dto.favorite;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class FavoriteDTO {
+
+    private Long restaurantId;
+
+    private String restaurantName;
+
+    private String location;
+
+}
