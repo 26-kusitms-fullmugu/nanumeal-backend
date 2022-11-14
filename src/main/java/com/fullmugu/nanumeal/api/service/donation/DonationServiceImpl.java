@@ -23,7 +23,7 @@ public class DonationServiceImpl implements DonationService{
 
         List<Donation> donations = donationRepository.findAllByUser_UserId(user);
 
-        List<DonationDTO> donationsList = donations.stream().map(donation -> EntityToDTO(donation)).collect(Collectors.toList());
+        List<DonationDTO> donationsList = donations.stream().map(donation -> entityToDTO(donation)).collect(Collectors.toList());
 
         return donationsList;
     }

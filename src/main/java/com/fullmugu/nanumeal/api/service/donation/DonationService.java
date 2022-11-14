@@ -10,7 +10,7 @@ public interface DonationService {
 
     List<DonationDTO> myDonation(User user);
 
-    default DonationDTO EntityToDTO(Donation donation){
+    default DonationDTO entityToDTO(Donation donation){
         DonationDTO donationDTO = DonationDTO.builder()
                 .donateDate(donation.getRegDate())
                 .donateName(donation.getDonateUserId().getName())
