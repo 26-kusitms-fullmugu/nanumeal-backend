@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -72,19 +71,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         } else {
             request.setAttribute("id", id);
             User user = userService.getUserById(id);
-            UserDetails principal = org.springframework.security.core.userdetails.User
-                    .withUsername(user.getEmail())
-                    .password(user.getPassword())
-                    .authorities(user.getRole())
-                    .accountExpired(false)
-                    .accountLocked(false)
-                    .credentialsExpired(false)
-                    .disabled(false)
-                    .build();
 
             SecurityContextHolder
                     .getContext()
-                    .setAuthentication(new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities()));
+                    .setAuthentication(new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities()));
         }
 
         // filterChain에 값 넘김
