@@ -1,6 +1,5 @@
 package com.fullmugu.nanumeal.config;
 
-import com.fullmugu.nanumeal.api.service.UserService;
 import com.fullmugu.nanumeal.oauth.jwt.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -15,20 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        /* Spring Security를 적용하지 않을 URI 설정 */
-//        return web -> {
-//            web
-//                    .ignoring()
-//                    .antMatchers(
-//                            "/swagger-ui/**"
-//                    )
-//            ;
-//        };
-//    }
+    private final JwtSecurityConfig jwtSecurityConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -66,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
-                .apply(new JwtSecurityConfig(userService));
+                .apply(jwtSecurityConfig);
 //                .accessDeniedHandler()
 
 
