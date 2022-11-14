@@ -12,21 +12,29 @@ spring:
     username: sa
     password:
 
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  #  autoconfigure:
+  #    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
   # JPA 설정
   jpa:
-    hibernate: # hibernate 사용 설정
+    hibernate:
+      ddl-auto: update
+      # hibernate 사용 설정
       # 애플리케이션 실행 시점에 테이블을 다 지우고, 내가 가진 entity 정보를 보고 다시 테이블 자동 생성
-      ddl-auto: create
+    #      ddl-auto: create
     properties: # property 사용 설정
       hibernate: # hibernate property 설정
         format_sql: true
+        use_sql_comments: true
+    show-sql: true
+    open-in-view: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
 
   config:
     import:
       - classpath:/application-kakao.yml
+      - classpath:/application-test.yml
 
 # 로그 레벨 설정
 logging:
