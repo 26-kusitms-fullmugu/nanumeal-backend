@@ -2,7 +2,7 @@ package com.fullmugu.nanumeal.api.controller.user;
 
 import com.fullmugu.nanumeal.api.dto.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
-import com.fullmugu.nanumeal.api.service.UserService;
+import com.fullmugu.nanumeal.api.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

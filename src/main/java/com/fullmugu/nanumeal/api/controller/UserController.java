@@ -22,7 +22,7 @@ public class UserController {
     public ResponseEntity<UserInfoResponseDto> getCurrentUser(HttpServletRequest request) {
 
 
-        User user = userService.getUser(request);
+        User user = userService.getUserFromReq(request);
 
 
         return ResponseEntity.ok().body(UserInfoResponseDto.from(user));
