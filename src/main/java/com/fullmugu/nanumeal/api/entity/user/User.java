@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
@@ -48,7 +50,7 @@ public class User implements UserDetails {
     @Column(length = 255)
     private String location;
     @Column(length = 255, unique = true)
-    private String username;
+    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -79,9 +81,14 @@ public class User implements UserDetails {
     private List<Donation> donations = new ArrayList<>();
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+    public User(Long kakaoId, String nickName, String email, String password, Role role, String provider) {
+        this.kakaoId = kakaoId;
+        this.nickName = nickName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
     }
 
     @Override
@@ -118,14 +125,14 @@ public class User implements UserDetails {
         this.password += this.id;
     }
 
-    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(Long kakaoId, String username, String email, String password, Role role, String provider) {
-        this.kakaoId = kakaoId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.provider = provider;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<String> roles = new ArrayList<>();
+        roles.add(role.toString());
+
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
 }
