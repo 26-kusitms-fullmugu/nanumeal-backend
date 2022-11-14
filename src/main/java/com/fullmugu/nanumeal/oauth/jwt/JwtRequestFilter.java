@@ -8,6 +8,7 @@ import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,9 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+
+    @Value("${jwt.secret}")
+    private String SECRET;
 
     private final UserService userService;
 
@@ -45,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // HMAC을 검증하고 id 값 가져오기
         try {
-            id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+            id = JWT.require(Algorithm.HMAC512(SECRET)).build().verify(token)
                     .getClaim("id").asLong();
         } catch (TokenExpiredException e) {
             log.info("토큰 만료");
