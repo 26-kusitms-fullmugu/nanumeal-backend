@@ -32,4 +32,10 @@ public class FavoriteController {
         favoriteService.register(favoriteRequestDTO);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("{favoriteId}")
+    public ResponseEntity delete(@PathVariable("favoriteId") Long favoriteId, @AuthenticationPrincipal User user){
+        favoriteService.delelte(favoriteId, user);
+        return ResponseEntity.noContent().build();
+    }
 }

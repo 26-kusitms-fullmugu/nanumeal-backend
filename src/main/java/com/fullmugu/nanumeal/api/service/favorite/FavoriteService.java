@@ -14,6 +14,8 @@ public interface FavoriteService {
 
     void register(FavoriteRequestDTO favoriteRequestDTO);
 
+    void delelte(Long favoriteId, User user);
+
     default FavoriteDTO entityToDTO(Favorite favorite){
         FavoriteDTO favoriteDTO = FavoriteDTO.builder()
                 .location(favorite.getRestaurantId().getLocation())

@@ -8,6 +8,8 @@ import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.api.entity.restaurant.RestaurantRepository;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.exception.CFavoriteNotFoundException;
+import com.fullmugu.nanumeal.exception.CNotAllowedDeleteFavoriteException;
 import com.fullmugu.nanumeal.exception.CRestaurantNotFoundException;
 import com.fullmugu.nanumeal.exception.CUserNotFoundException;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
@@ -42,6 +44,22 @@ public class FavoriteServiceImpl implements FavoriteService{
     public void register(FavoriteRequestDTO favoriteRequestDTO) {
         Favorite favorite = DtoToEntity(favoriteRequestDTO);
         favoriteRepository.save(favorite);
+    }
+
+    @Override
+    public void delelte(Long favoriteId, User user) {
+        Favorite favorite = favoriteRepository.findById(favoriteId)
+                .orElseThrow(() -> new CFavoriteNotFoundException("즐겨찾기를 하지 않았습니다.", ErrorCode.NOT_FOUND));
+        Long favoriteUserId = favorite.getUserId().getId();
+        Long userId = user.getId();
+
+        // 즐겨찾기를 한 사람의 아이디가 현재 로그인한 사용자가 아닐 경우
+        if(!favoriteUserId.equals(userId)){
+            throw new CNotAllowedDeleteFavoriteException("즐겨찾기를 해제할 권한이 없습니다.", ErrorCode.UNAUTHORIZED);
+        }else if(favoriteUserId.equals(userId)){
+            favoriteRepository.deleteById(favoriteId);
+        }
+
     }
 
     Favorite DtoToEntity(FavoriteRequestDTO favoriteRequestDTO){
