@@ -1,15 +1,13 @@
 package com.fullmugu.nanumeal.auth.controller;
 
+import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.service.AuthService;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +31,21 @@ public class AuthController {
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
 
         //(4)
+        return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> formSignUp(@RequestBody FormSignupRequestDto formSignupRequestDto) {
+
+        String jwtToken = authService.saveUserAndGetToken(formSignupRequestDto);
+
+        if (jwtToken.equals("Duplicated ID.")) {
+            return ResponseEntity.ok().body("Duplicated ID.");
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+
         return ResponseEntity.ok().headers(headers).body("success");
     }
 }
