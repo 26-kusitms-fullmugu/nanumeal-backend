@@ -57,23 +57,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String saveUserAndGetToken(FormSignupRequestDto formSignupRequestDto) {
-//        KakaoProfileDto profile = findProfile(token);
-//
-//        User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
-//        if (user == null) {
-//            user = User.oauth2Register()
-//                    .kakaoId(profile.getId())
-//                    .nickName(profile.getKakao_account().getProfile().getNickname())
-//                    .password("Kakao" + profile.getId())
-//                    .email(profile.getKakao_account().getEmail())
-//                    .role(Role.ROLE_USER)
-//                    .provider("Kakao")
-//                    .build();
-//
-//            userRepository.save(user);
-//            user.generatePassword();
-//            userRepository.saveAndFlush(user);
-//        }
 
         if (userRepository.findByLoginId(formSignupRequestDto.getLoginId()).isPresent()) {
             return "Duplicated ID.";
