@@ -1,8 +1,8 @@
-package com.fullmugu.nanumeal.oauth.service;
+package com.fullmugu.nanumeal.auth.service;
 
 import com.fullmugu.nanumeal.api.entity.user.User;
-import com.fullmugu.nanumeal.oauth.dto.KakaoProfileDto;
-import com.fullmugu.nanumeal.oauth.token.OAuthToken;
+import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
+import com.fullmugu.nanumeal.auth.token.OAuthToken;
 
 public interface AuthService {
 

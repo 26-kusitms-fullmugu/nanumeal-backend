@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.token;
+package com.fullmugu.nanumeal.auth.token;
 
 import lombok.Data;
 

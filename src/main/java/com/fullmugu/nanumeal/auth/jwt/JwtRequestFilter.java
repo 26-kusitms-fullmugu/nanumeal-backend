@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.jwt;
+package com.fullmugu.nanumeal.auth.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

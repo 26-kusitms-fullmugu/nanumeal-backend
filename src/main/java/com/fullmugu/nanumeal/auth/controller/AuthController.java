@@ -1,8 +1,8 @@
-package com.fullmugu.nanumeal.oauth.controller;
+package com.fullmugu.nanumeal.auth.controller;
 
-import com.fullmugu.nanumeal.oauth.jwt.JwtProperties;
-import com.fullmugu.nanumeal.oauth.service.AuthService;
-import com.fullmugu.nanumeal.oauth.token.OAuthToken;
+import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
+import com.fullmugu.nanumeal.auth.service.AuthService;
+import com.fullmugu.nanumeal.auth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

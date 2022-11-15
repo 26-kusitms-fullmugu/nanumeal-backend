@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.service;
+package com.fullmugu.nanumeal.auth.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullmugu.nanumeal.api.entity.user.Role;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
-import com.fullmugu.nanumeal.oauth.dto.KakaoProfileDto;
-import com.fullmugu.nanumeal.oauth.jwt.JwtProperties;
-import com.fullmugu.nanumeal.oauth.token.OAuthToken;
+import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
+import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
+import com.fullmugu.nanumeal.auth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

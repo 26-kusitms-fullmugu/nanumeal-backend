@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.jwt;
+package com.fullmugu.nanumeal.auth.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

@@ -1,6 +1,6 @@
 package com.fullmugu.nanumeal.config;
 
-import com.fullmugu.nanumeal.oauth.jwt.CustomAuthenticationEntryPoint;
+import com.fullmugu.nanumeal.auth.jwt.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
