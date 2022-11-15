@@ -93,6 +93,13 @@ public class User implements UserDetails {
         this.provider = provider;
     }
 
+    @Builder(builderClassName = "FormSignup", builderMethodName = "formSignup")
+    public User(String loginId, String email, String password) {
+        this.loginId = loginId;
+        this.email = email;
+        this.password = password;
+    }
+
     @Override
     public String getPassword() {
         return this.password;
