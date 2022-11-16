@@ -1,5 +1,7 @@
 package com.fullmugu.nanumeal.auth.controller;
 
+import com.fullmugu.nanumeal.api.entity.user.User;
+import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
 import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.service.AuthService;
@@ -42,6 +44,27 @@ public class AuthController {
         if (jwtToken.equals("Duplicated ID.")) {
             return ResponseEntity.ok().body("Duplicated ID.");
         }
+
+        if (jwtToken.equals("Duplicated email.")) {
+            return ResponseEntity.ok().body("Duplicated email.");
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+
+        return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> formLogin(@RequestBody FormLoginRequestDto formLoginRequestDto) {
+
+        User user = authService.findUserByFormLoginRequestDto(formLoginRequestDto);
+
+        if (user == null) {
+            return ResponseEntity.ok().body("ID or PW does not matches.");
+        }
+
+        String jwtToken = authService.createToken(user);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
