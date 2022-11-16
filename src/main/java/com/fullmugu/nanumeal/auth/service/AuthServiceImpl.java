@@ -299,7 +299,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String checkEmailDuplication(String email) {
-        if (userRepository.findByLoginId(email).isPresent()) {
+        if (userRepository.findByEmail(email) != null) {
             return "duplicate email.";
         } else {
             return "success";

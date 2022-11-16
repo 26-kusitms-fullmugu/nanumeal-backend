@@ -88,7 +88,7 @@ public class AuthController {
         return ResponseEntity.ok().body(authService.checkLoginIdDuplication(loginId));
     }
 
-    @PostMapping("/verify/login-id")
+    @PostMapping("/verify/email")
     public ResponseEntity<String> verifyEmail(@RequestBody String email) {
         return ResponseEntity.ok().body(authService.checkEmailDuplication(email));
     }
