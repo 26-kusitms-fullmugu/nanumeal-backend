@@ -19,6 +19,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,6 +33,7 @@ import java.util.Optional;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     @Value("${jwt.secret}")
@@ -53,6 +55,7 @@ public class AuthServiceImpl implements AuthService {
 
             userRepository.save(user);
             user.generatePassword();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
         }
 
@@ -72,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
 
         User user = User.formSignup()
                 .loginId(formSignupRequestDto.getLoginId())
-                .password(formSignupRequestDto.getPassword())
+                .password(passwordEncoder.encode(formSignupRequestDto.getPassword()))
                 .email(formSignupRequestDto.getEmail())
                 .role(Role.ROLE_USER)
                 .build();
@@ -88,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
         if (user.isEmpty()) {
             log.info("ID does not exists.");
             return null;
-        } else if (!user.get().getPassword().equals(formLoginRequestDto.getPassword())) {
+        } else if (!passwordEncoder.matches(formLoginRequestDto.getPassword(), user.get().getPassword())) {
             log.info("PW does not matches.");
             return null;
         } else if (user.get().getProvider() != null) {
