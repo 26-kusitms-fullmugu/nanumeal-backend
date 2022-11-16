@@ -91,6 +91,9 @@ public class AuthServiceImpl implements AuthService {
         } else if (!user.get().getPassword().equals(formLoginRequestDto.getPassword())) {
             log.info("PW does not matches.");
             return null;
+        } else if (user.get().getProvider() != null) {
+            log.info("Social login user.");
+            return null;
         } else {
             return user.get();
         }
