@@ -84,9 +84,9 @@ public class User implements UserDetails {
 
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(Long kakaoId, String nickName, String email, String password, Type type, Role role, String provider) {
+    public User(Long kakaoId, String name, String email, String password, Type type, Role role, String provider) {
         this.kakaoId = kakaoId;
-        this.nickName = nickName;
+        this.name = name;
         this.password = password;
         this.email = email;
         this.type = type;
