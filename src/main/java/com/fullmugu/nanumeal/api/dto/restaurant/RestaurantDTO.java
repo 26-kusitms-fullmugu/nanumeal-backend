@@ -19,9 +19,9 @@ public class RestaurantDTO {
 
     private String information;
 
-    private String x;
+    private Double x;
 
-    private String y;
+    private Double y;
 
 //    즐겨찾기 여부
     private boolean like;

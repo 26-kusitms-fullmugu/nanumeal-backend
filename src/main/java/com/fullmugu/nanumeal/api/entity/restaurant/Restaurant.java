@@ -45,10 +45,10 @@ public class Restaurant {
     private Boolean GoB;
 
     @Column(nullable = false, length = 255)
-    private String x;
+    private Double x;
 
     @Column(nullable = false, length = 255)
-    private String y;
+    private Double y;
 
     @OneToMany(mappedBy = "restaurantId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> menus = new ArrayList<>();
