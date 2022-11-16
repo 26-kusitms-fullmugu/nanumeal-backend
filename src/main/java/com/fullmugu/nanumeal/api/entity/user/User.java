@@ -94,10 +94,11 @@ public class User implements UserDetails {
     }
 
     @Builder(builderClassName = "FormSignup", builderMethodName = "formSignup")
-    public User(String loginId, String email, String password) {
+    public User(String loginId, String email, String password, Role role) {
         this.loginId = loginId;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     @Override
