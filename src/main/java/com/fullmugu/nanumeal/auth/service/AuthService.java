@@ -30,5 +30,7 @@ public interface AuthService {
     String createKey();
 
     String sendSimpleMessage(String to) throws Exception;
+
+    String checkNickNameDuplication(String nickName);
 }
 

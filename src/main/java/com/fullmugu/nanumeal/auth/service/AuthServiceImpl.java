@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         if (user == null) {
             user = User.oauth2Register()
                     .kakaoId(profile.getId())
-                    .nickName(profile.getKakao_account().getProfile().getNickname())
+                    .name(profile.getKakao_account().getProfile().getNickname())
                     .password("Kakao" + profile.getId())
                     .type(type)
                     .email(profile.getKakao_account().getEmail())
@@ -277,6 +277,15 @@ public class AuthServiceImpl implements AuthService {
 
 
         return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
+    }
+
+    @Override
+    public String checkNickNameDuplication(String nickName) {
+        if (userRepository.findByNickName(nickName).isPresent()) {
+            return "duplicate nickname.";
+        } else {
+            return "success";
+        }
     }
 }
 
