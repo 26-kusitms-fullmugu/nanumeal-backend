@@ -296,5 +296,14 @@ public class AuthServiceImpl implements AuthService {
             return "success";
         }
     }
+
+    @Override
+    public String checkEmailDuplication(String email) {
+        if (userRepository.findByLoginId(email).isPresent()) {
+            return "duplicate email.";
+        } else {
+            return "success";
+        }
+    }
 }
 

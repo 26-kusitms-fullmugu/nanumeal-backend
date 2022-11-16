@@ -34,5 +34,7 @@ public interface AuthService {
     String checkNickNameDuplication(String nickName);
 
     String checkLoginIdDuplication(String loginId);
+
+    String checkEmailDuplication(String email);
 }
 
