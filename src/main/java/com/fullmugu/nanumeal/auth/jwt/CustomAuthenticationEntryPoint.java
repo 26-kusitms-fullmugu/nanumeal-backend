@@ -33,6 +33,11 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             errorCode = "유효하지 않은 토큰입니다.";
             setResponse(response, errorCode);
         }
+
+        if (exception.equals("존재하지 않는 사용자입니다.")) {
+            errorCode = "존재하지 않는 사용자입니다.";
+            setResponse(response, errorCode);
+        }
     }
 
     // 응답 설정
