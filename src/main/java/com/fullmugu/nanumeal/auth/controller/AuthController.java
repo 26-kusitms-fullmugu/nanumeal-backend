@@ -71,4 +71,9 @@ public class AuthController {
 
         return ResponseEntity.ok().headers(headers).body("success");
     }
+
+    @PostMapping("/email")
+    public ResponseEntity<String> mailAuthorization(@RequestBody String email) throws Exception {
+        return ResponseEntity.ok().body(authService.sendSimpleMessage(email));
+    }
 }
