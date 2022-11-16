@@ -26,4 +26,9 @@ public class UserController {
     public ResponseEntity<UserInfoResponseDto> inputUserInfo(@AuthenticationPrincipal User user, @RequestBody InputUserInfoRequestDto inputUserInfoRequestDto) {
         return ResponseEntity.ok().body(UserInfoResponseDto.from(userService.setUserInfo(user, inputUserInfoRequestDto)));
     }
+
+    @DeleteMapping("/info")
+    public ResponseEntity<String> deleteUser(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok().body(userService.deleteUser(user));
+    }
 }
