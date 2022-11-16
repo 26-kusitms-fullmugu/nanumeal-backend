@@ -32,5 +32,7 @@ public interface AuthService {
     String sendSimpleMessage(String to) throws Exception;
 
     String checkNickNameDuplication(String nickName);
+
+    String checkLoginIdDuplication(String loginId);
 }
 

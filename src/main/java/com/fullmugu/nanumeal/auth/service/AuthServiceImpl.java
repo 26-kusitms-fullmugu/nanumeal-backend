@@ -287,5 +287,14 @@ public class AuthServiceImpl implements AuthService {
             return "success";
         }
     }
+
+    @Override
+    public String checkLoginIdDuplication(String loginId) {
+        if (userRepository.findByLoginId(loginId).isPresent()) {
+            return "duplicate loginId.";
+        } else {
+            return "success";
+        }
+    }
 }
 

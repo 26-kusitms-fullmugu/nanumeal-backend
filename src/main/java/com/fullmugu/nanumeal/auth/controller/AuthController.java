@@ -78,8 +78,13 @@ public class AuthController {
         return ResponseEntity.ok().body(authService.sendSimpleMessage(email));
     }
 
-    @PostMapping("/nickname")
+    @PostMapping("/verify/nickname")
     public ResponseEntity<String> verifyNickName(@RequestBody String nickName) {
         return ResponseEntity.ok().body(authService.checkNickNameDuplication(nickName));
+    }
+
+    @PostMapping("/verify/login-id")
+    public ResponseEntity<String> verifyLoginId(@RequestBody String loginId) {
+        return ResponseEntity.ok().body(authService.checkLoginIdDuplication(loginId));
     }
 }
