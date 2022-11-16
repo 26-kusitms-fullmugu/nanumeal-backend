@@ -7,11 +7,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullmugu.nanumeal.api.entity.user.Role;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
 import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +25,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -62,15 +66,34 @@ public class AuthServiceImpl implements AuthService {
             return "Duplicated ID.";
         }
 
+        if (userRepository.findByEmail(formSignupRequestDto.getEmail()) != null) {
+            return "Duplicated email.";
+        }
+
         User user = User.formSignup()
                 .loginId(formSignupRequestDto.getLoginId())
                 .password(formSignupRequestDto.getPassword())
                 .email(formSignupRequestDto.getEmail())
+                .role(Role.ROLE_USER)
                 .build();
 
         userRepository.saveAndFlush(user);
 
         return createToken(user); //(2)
+    }
+
+    @Override
+    public User findUserByFormLoginRequestDto(FormLoginRequestDto formLoginRequestDto) {
+        Optional<User> user = userRepository.findByLoginId(formLoginRequestDto.getLoginId());
+        if (user.isEmpty()) {
+            log.info("ID does not exists.");
+            return null;
+        } else if (!user.get().getPassword().equals(formLoginRequestDto.getPassword())) {
+            log.info("PW does not matches.");
+            return null;
+        } else {
+            return user.get();
+        }
     }
 
     public KakaoProfileDto findProfile(String token) {
