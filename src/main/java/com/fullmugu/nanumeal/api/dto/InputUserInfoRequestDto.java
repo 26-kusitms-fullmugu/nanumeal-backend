@@ -1,9 +1,9 @@
-package com.fullmugu.nanumeal.auth.dto;
+package com.fullmugu.nanumeal.api.dto;
 
 import lombok.Data;
 
 @Data
-public class InputInfoRequestDto {
+public class InputUserInfoRequestDto {
 
     private String name;
 
