@@ -8,6 +8,7 @@ import com.fullmugu.nanumeal.exception.CUserNotFoundException;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -33,6 +34,19 @@ public class UserServiceImpl implements UserService {
         user.setLocation(inputUserInfoRequestDto.getLocation());
 
         return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public String deleteUser(User user) {
+        Long id = user.getId();
+        userRepository.deleteUserById(id);
+
+        if (userRepository.findById(id).isPresent()) {
+            return "fail";
+        }
+
+        return "success";
     }
 
     @Override

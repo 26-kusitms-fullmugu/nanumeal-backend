@@ -12,6 +12,8 @@ public interface UserService {
 
     User setUserInfo(User user, InputUserInfoRequestDto inputUserInfoRequestDto);
 
+    String deleteUser(User user);
+
     User getUserById(Long id);
 
     UserDTO getUser(Long id);
