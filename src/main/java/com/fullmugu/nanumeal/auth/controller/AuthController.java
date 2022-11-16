@@ -77,4 +77,9 @@ public class AuthController {
     public ResponseEntity<String> mailAuthorization(@RequestBody String email) throws Exception {
         return ResponseEntity.ok().body(authService.sendSimpleMessage(email));
     }
+
+    @PostMapping("/nickname")
+    public ResponseEntity<String> verifyNickName(@RequestBody String nickName) {
+        return ResponseEntity.ok().body(authService.checkNickNameDuplication(nickName));
+    }
 }
