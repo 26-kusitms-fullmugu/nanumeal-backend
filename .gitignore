@@ -37,5 +37,6 @@ out/
 .vscode/
 
 ### Security Files ###
-src/main/resources/application-security.yml
+src/main/resources/application-test.yml
+src/main/resources/application-deploy.yml
 src/main/resources/application-kakao.yml
