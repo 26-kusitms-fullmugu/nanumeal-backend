@@ -28,6 +28,30 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+    - name: Copy application-deploy.yml
+      env:
+        OCCUPY_DEPLOY: ${{ secrets.OCCUPY_DEPLOY }}
+        OCCUPY_DEPLOY_DIR: src/main/resources
+        OCCUPY_DEPLOY_TEST_DIR: src/test/resources
+        OCCUPY_DEPLOY_DIR_FILE_NAME: application-deploy.yml
+      run: echo $OCCUPY_DEPLOY | base64 --decode > $OCCUPY_DEPLOY_DIR/$OCCUPY_DEPLOY_DIR_FILE_NAME &&
+           echo $OCCUPY_DEPLOY | base64 --decode > $OCCUPY_DEPLOY_TEST_DIR/$OCCUPY_DEPLOY_DIR_FILE_NAME
+    - name: Copy application-kakao.yml
+      env:
+        OCCUPY_KAKAO: ${{ secrets.OCCUPY_KAKAO }}
+        OCCUPY_KAKAO_DIR: src/main/resources
+        OCCUPY_KAKAO_TEST_DIR: src/test/resources
+        OCCUPY_KAKAO_DIR_FILE_NAME: application-KAKAO.yml
+      run: echo $OCCUPY_KAKAO | base64 --decode > $OCCUPY_KAKAO_DIR/$OCCUPY_KAKAO_DIR_FILE_NAME &&
+           echo $OCCUPY_KAKAO | base64 --decode > $OCCUPY_KAKAO_TEST_DIR/$OCCUPY_KAKAO_DIR_FILE_NAME
+    - name: Copy application-test.yml
+      env:
+        OCCUPY_TEST: ${{ secrets.OCCUPY_TEST }}
+        OCCUPY_TEST_DIR: src/main/resources
+        OCCUPY_TEST_TEST_DIR: src/test/resources
+        OCCUPY_TEST_DIR_FILE_NAME: application-TEST.yml
+      run: echo $OCCUPY_TEST | base64 --decode > $OCCUPY_TEST_DIR/$OCCUPY_TEST_DIR_FILE_NAME &&
+           echo $OCCUPY_TEST | base64 --decode > $OCCUPY_TEST_TEST_DIR/$OCCUPY_TEST_DIR_FILE_NAME
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
