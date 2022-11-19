@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.api.dto;
+package com.fullmugu.nanumeal.api.dto.user;
 
 import com.fullmugu.nanumeal.api.entity.user.Type;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,8 @@ public class UserDTO {
     private List<String> roleSet = new ArrayList<>();
 
     private String email;
+
+    private String userId;
 
     private String nickName;
 

@@ -1,6 +1,6 @@
 package com.fullmugu.nanumeal.api.controller.user;
 
-import com.fullmugu.nanumeal.api.dto.UserDTO;
+import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.user.UserService;
 import lombok.RequiredArgsConstructor;

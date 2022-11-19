@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.api.service.user;
 
+
 import com.fullmugu.nanumeal.api.dto.InputUserInfoRequestDto;
 import com.fullmugu.nanumeal.api.dto.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Log4j2
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
