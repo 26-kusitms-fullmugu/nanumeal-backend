@@ -1,4 +1,5 @@
 spring:
+
   h2:
     console:
       enabled: true
@@ -35,6 +36,8 @@ spring:
     import:
       - classpath:/application-kakao.yml
       - classpath:/application-test.yml
+    activate:
+      on-profile: local
 
 # 로그 레벨 설정
 logging:

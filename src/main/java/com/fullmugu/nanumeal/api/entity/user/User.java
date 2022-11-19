@@ -31,9 +31,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Long id;
-
     @Column()
     private Long kakaoId; // 카카오에서 주는 시퀀스 넘버
+
+    @Column(length = 255, unique = true)
+    private String loginId;
 
     @Column(length = 255, unique = true)
     private String email;
@@ -82,13 +84,27 @@ public class User implements UserDetails {
 
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(Long kakaoId, String nickName, String email, String password, Role role, String provider) {
+    public User(Long kakaoId, String name, String email, String password, Type type, Role role, String provider) {
         this.kakaoId = kakaoId;
-        this.nickName = nickName;
+        this.name = name;
         this.password = password;
         this.email = email;
+        this.type = type;
         this.role = role;
         this.provider = provider;
+    }
+
+    @Builder(builderClassName = "FormSignup", builderMethodName = "formSignup")
+    public User(String loginId, String email, String password, Type type, String name, String nickName, Long age, String location, Role role) {
+        this.loginId = loginId;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.name = name;
+        this.nickName = nickName;
+        this.age = age;
+        this.location = location;
+        this.role = role;
     }
 
     @Override

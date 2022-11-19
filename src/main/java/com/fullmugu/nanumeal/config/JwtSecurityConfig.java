@@ -1,7 +1,7 @@
 package com.fullmugu.nanumeal.config;
 
 import com.fullmugu.nanumeal.api.service.user.UserService;
-import com.fullmugu.nanumeal.oauth.jwt.JwtRequestFilter;
+import com.fullmugu.nanumeal.auth.jwt.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.jwt;
+package com.fullmugu.nanumeal.auth.jwt;
 
 import org.springframework.stereotype.Component;
 

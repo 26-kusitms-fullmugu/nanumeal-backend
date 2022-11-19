@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.oauth.jwt;
+package com.fullmugu.nanumeal.auth.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
@@ -31,6 +31,11 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         if (exception.equals("유효하지 않은 토큰입니다.")) {
             errorCode = "유효하지 않은 토큰입니다.";
+            setResponse(response, errorCode);
+        }
+
+        if (exception.equals("존재하지 않는 사용자입니다.")) {
+            errorCode = "존재하지 않는 사용자입니다.";
             setResponse(response, errorCode);
         }
     }
