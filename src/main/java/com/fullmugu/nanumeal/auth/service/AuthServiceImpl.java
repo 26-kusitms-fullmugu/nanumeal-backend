@@ -13,6 +13,8 @@ import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
+import com.fullmugu.nanumeal.exception.CUserNotFoundException;
+import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,13 +110,13 @@ public class AuthServiceImpl implements AuthService {
         Optional<User> user = userRepository.findByLoginId(formLoginRequestDto.getLoginId());
         if (user.isEmpty()) {
             log.info("ID does not exists.");
-            return null;
+            throw new CUserNotFoundException("ID 혹은 비밀번호가 일치하지 않습니다.", ErrorCode.FORBIDDEN);
         } else if (!passwordEncoder.matches(formLoginRequestDto.getPassword(), user.get().getPassword())) {
             log.info("PW does not matches.");
-            return null;
+            throw new CUserNotFoundException("ID 혹은 비밀번호가 일치하지 않습니다.", ErrorCode.FORBIDDEN);
         } else if (user.get().getProvider() != null) {
             log.info("Social login user.");
-            return null;
+            throw new CUserNotFoundException("소셜 로그인 유저입니다.", ErrorCode.FORBIDDEN);
         } else {
             return user.get();
         }
