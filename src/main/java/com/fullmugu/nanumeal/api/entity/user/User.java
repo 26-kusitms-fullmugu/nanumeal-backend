@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
@@ -29,23 +31,27 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Long id;
+    @Column()
+    private Long kakaoId; // 카카오에서 주는 시퀀스 넘버
 
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(length = 255, unique = true)
+    private String loginId;
+
+    @Column(length = 255, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String name;
 
-    @Column(nullable = false)
+    @Column()
     private Long age;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String location;
-
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(length = 255, unique = true)
     private String nickName;
 
     @Enumerated(EnumType.STRING)
@@ -58,8 +64,12 @@ public class User implements UserDetails {
     @LastModifiedDate
     @Column(name = "moddate")
     private LocalDateTime modDate;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-//    연관관계의 주인은 FK를 가진 쪽.
+    private String provider;
+
+    //    연관관계의 주인은 FK를 가진 쪽.
     @OneToMany(mappedBy = "childId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ThkMsg> thkMsgs = new ArrayList<>();
 
@@ -73,9 +83,28 @@ public class User implements UserDetails {
     private List<Donation> donations = new ArrayList<>();
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+    public User(Long kakaoId, String name, String email, String password, Type type, Role role, String provider) {
+        this.kakaoId = kakaoId;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.type = type;
+        this.role = role;
+        this.provider = provider;
+    }
+
+    @Builder(builderClassName = "FormSignup", builderMethodName = "formSignup")
+    public User(String loginId, String email, String password, Type type, String name, String nickName, Long age, String location, Role role) {
+        this.loginId = loginId;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.name = name;
+        this.nickName = nickName;
+        this.age = age;
+        this.location = location;
+        this.role = role;
     }
 
     @Override
@@ -107,4 +136,19 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void generatePassword() {
+        this.password += this.id;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<String> roles = new ArrayList<>();
+        roles.add(role.toString());
+
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
 }
