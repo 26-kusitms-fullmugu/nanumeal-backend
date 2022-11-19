@@ -5,6 +5,7 @@ import com.fullmugu.nanumeal.api.dto.InputUserInfoRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
+import com.fullmugu.nanumeal.exception.CDeletionFailException;
 import com.fullmugu.nanumeal.exception.CUserNotFoundException;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User setUserInfo(User user, InputUserInfoRequestDto inputUserInfoRequestDto) {
         user.setName(inputUserInfoRequestDto.getName());
         user.setNickName(inputUserInfoRequestDto.getNickName());
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteUserById(id);
 
         if (userRepository.findById(id).isPresent()) {
-            return "fail";
+            throw new CDeletionFailException("일시적 삭제 오류입니다.", ErrorCode.INTER_SERVER_ERROR);
         }
 
         return "success";
