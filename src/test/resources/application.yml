@@ -33,9 +33,6 @@ spring:
 
 
   config:
-    import:
-      - classpath:/application-kakao.yml
-      - classpath:/application-test.yml
     activate:
       on-profile: local
 
