@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
@@ -16,4 +17,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
             " (r.y BETWEEN :swy and :ney)")
     List<Restaurant> findAllByXY(@Param("swx") Double swx, @Param("nex") Double nex,
                                  @Param("swy") Double swy, @Param("ney") Double ney);
+
+    Optional<Restaurant> findByNameAndLocation(String name, String location);
 }
