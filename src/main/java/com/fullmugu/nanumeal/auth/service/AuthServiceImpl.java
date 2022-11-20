@@ -13,7 +13,7 @@ import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
-import com.fullmugu.nanumeal.exception.CUserNotFoundException;
+import com.fullmugu.nanumeal.exception.*;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -81,11 +81,11 @@ public class AuthServiceImpl implements AuthService {
     public String saveUserAndGetToken(FormSignupRequestDto formSignupRequestDto) {
 
         if (userRepository.findByLoginId(formSignupRequestDto.getLoginId()).isPresent()) {
-            return "Duplicated ID.";
+            throw new CDuplicateLoginIdException("이미 존재하는 ID입니다.", ErrorCode.BAD_REQUEST);
         }
 
         if (userRepository.findByEmail(formSignupRequestDto.getEmail()) != null) {
-            return "Duplicated email.";
+            throw new CDuplicateEmailException("이미 존재하는 이메일입니다.", ErrorCode.BAD_REQUEST);
         }
 
         User user = User.formSignup()
@@ -194,6 +194,10 @@ public class AuthServiceImpl implements AuthService {
                 String.class
         );
 
+        if (accessTokenResponse.getStatusCodeValue() == 400) {
+            throw new CAuthorizationCodeInvalidException("인가 코드가 유효하지 않습니다.", ErrorCode.BAD_REQUEST);
+        }
+
         //(7)
         ObjectMapper objectMapper = new ObjectMapper();
         OAuthToken oAuthToken = null;
@@ -217,8 +221,8 @@ public class AuthServiceImpl implements AuthService {
 
         String msgg = "";
         msgg += "<div style='margin:100px;'>";
-        msgg += "<h1> 안녕하세요</h1>";
-        msgg += "<h1> 통합 취업 정보 포탈 Nanumeal 입니다</h1>";
+        msgg += "<h1> 안녕하세요.</h1>";
+        msgg += "<h1> 서스펜디드 밀의 시작, 나누밀입니다.</h1>";
         msgg += "<br>";
         msgg += "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
         msgg += "<br>";
@@ -284,7 +288,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String checkNickNameDuplication(String nickName) {
         if (userRepository.findByNickName(nickName).isPresent()) {
-            return "duplicate nickname.";
+            throw new CDuplicateNicknameException("이미 존재하는 닉네임입니다.", ErrorCode.FORBIDDEN);
         } else {
             return "success";
         }
@@ -293,7 +297,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String checkLoginIdDuplication(String loginId) {
         if (userRepository.findByLoginId(loginId).isPresent()) {
-            return "duplicate loginId.";
+            throw new CDuplicateLoginIdException("이미 존재하는 ID입니다.", ErrorCode.FORBIDDEN);
         } else {
             return "success";
         }
@@ -302,7 +306,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String checkEmailDuplication(String email) {
         if (userRepository.findByEmail(email) != null) {
-            return "duplicate email.";
+            throw new CDuplicateEmailException("이미 존재하는 이메일입니다.", ErrorCode.FORBIDDEN);
         } else {
             return "success";
         }

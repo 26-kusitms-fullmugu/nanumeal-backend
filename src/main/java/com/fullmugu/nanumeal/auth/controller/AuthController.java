@@ -42,14 +42,6 @@ public class AuthController {
 
         String jwtToken = authService.saveUserAndGetToken(formSignupRequestDto);
 
-        if (jwtToken.equals("Duplicated ID.")) {
-            return ResponseEntity.ok().body("Duplicated ID.");
-        }
-
-        if (jwtToken.equals("Duplicated email.")) {
-            return ResponseEntity.ok().body("Duplicated email.");
-        }
-
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
 
@@ -60,10 +52,6 @@ public class AuthController {
     public ResponseEntity<String> formLogin(@RequestBody FormLoginRequestDto formLoginRequestDto) {
 
         User user = authService.findUserByFormLoginRequestDto(formLoginRequestDto);
-
-        if (user == null) {
-            return ResponseEntity.ok().body("ID or PW does not matches.");
-        }
 
         String jwtToken = authService.createToken(user);
 
