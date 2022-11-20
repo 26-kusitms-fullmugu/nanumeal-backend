@@ -1,0 +1,44 @@
+package com.fullmugu.nanumeal.api.entity.thkmsg;
+
+import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
+import com.fullmugu.nanumeal.api.entity.user.User;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class ThkMsg {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "thxMsgId")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    private User childId;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurantId")
+    @JsonIgnore
+    private Restaurant resId;
+
+    @Column(nullable = false, length = 255)
+    private String message;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime regDate;
+
+
+
+}
