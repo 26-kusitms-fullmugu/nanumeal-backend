@@ -43,6 +43,10 @@ dependencies {
 
 }
 
+test.onlyIf {
+    !project.hasProperty('test')
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
