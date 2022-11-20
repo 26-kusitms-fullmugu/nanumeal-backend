@@ -41,12 +41,12 @@ jobs:
         OCCUPY_DEPLOY_DIR_FILE_NAME: application-deploy.yml
       run: echo $OCCUPY_DEPLOY | base64 --decode > $OCCUPY_DEPLOY_DIR/$OCCUPY_DEPLOY_DIR_FILE_NAME
       
-    - name: Copy application-kakao.yml
+    - name: Copy application-security.yml
       env:
         OCCUPY_KAKAO: ${{ secrets.OCCUPY_KAKAO }}
         OCCUPY_KAKAO_DIR: src/main/resources
         OCCUPY_KAKAO_TEST_DIR: src/test/resources
-        OCCUPY_KAKAO_DIR_FILE_NAME: application-KAKAO.yml
+        OCCUPY_KAKAO_DIR_FILE_NAME: application-kakao.yml
       run: echo $OCCUPY_KAKAO | base64 --decode > $OCCUPY_KAKAO_DIR/$OCCUPY_KAKAO_DIR_FILE_NAME
       
     - name: Copy application-test.yml
@@ -54,7 +54,7 @@ jobs:
         OCCUPY_TEST: ${{ secrets.OCCUPY_TEST }}
         OCCUPY_TEST_DIR: src/main/resources
         OCCUPY_TEST_TEST_DIR: src/test/resources
-        OCCUPY_TEST_DIR_FILE_NAME: application-TEST.yml
+        OCCUPY_TEST_DIR_FILE_NAME: application-test.yml
       run: echo $OCCUPY_TEST | base64 --decode > $OCCUPY_TEST_DIR/$OCCUPY_TEST_DIR_FILE_NAME
       
     - name: Grant execute permission for gradlew
