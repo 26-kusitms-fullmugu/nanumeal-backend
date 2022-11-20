@@ -1,0 +1,82 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  S3_BUCKET_NAME: nanumeal-system-deploy
+  PROJECT_NAME: nanumeal
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Copy application-deploy.yml
+      env:
+        OCCUPY_DEPLOY: ${{ secrets.OCCUPY_DEPLOY }}
+        OCCUPY_DEPLOY_DIR: src/main/resources
+        OCCUPY_DEPLOY_TEST_DIR: src/test/resources
+        OCCUPY_DEPLOY_DIR_FILE_NAME: application-deploy.yml
+      run: echo $OCCUPY_DEPLOY | base64 --decode > $OCCUPY_DEPLOY_DIR/$OCCUPY_DEPLOY_DIR_FILE_NAME
+      
+    - name: Copy application-kakao.yml
+      env:
+        OCCUPY_KAKAO: ${{ secrets.OCCUPY_KAKAO }}
+        OCCUPY_KAKAO_DIR: src/main/resources
+        OCCUPY_KAKAO_TEST_DIR: src/test/resources
+        OCCUPY_KAKAO_DIR_FILE_NAME: application-KAKAO.yml
+      run: echo $OCCUPY_KAKAO | base64 --decode > $OCCUPY_KAKAO_DIR/$OCCUPY_KAKAO_DIR_FILE_NAME
+      
+    - name: Copy application-test.yml
+      env:
+        OCCUPY_TEST: ${{ secrets.OCCUPY_TEST }}
+        OCCUPY_TEST_DIR: src/main/resources
+        OCCUPY_TEST_TEST_DIR: src/test/resources
+        OCCUPY_TEST_DIR_FILE_NAME: application-TEST.yml
+      run: echo $OCCUPY_TEST | base64 --decode > $OCCUPY_TEST_DIR/$OCCUPY_TEST_DIR_FILE_NAME
+      
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Build with Gradle
+      run: ./gradlew build
+      
+    - name: Make zip file
+      run: zip -r ./$GITHUB_SHA.zip .
+      shell: bash
+      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Upload to S3
+      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip 
+      
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name nanumeal-system-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+    
