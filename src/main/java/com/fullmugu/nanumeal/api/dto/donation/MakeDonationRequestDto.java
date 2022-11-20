@@ -9,5 +9,5 @@ public class MakeDonationRequestDto {
 
     private String location;
 
-    private String money;
+    private Long money;
 }
