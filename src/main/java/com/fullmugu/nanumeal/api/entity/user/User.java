@@ -5,6 +5,7 @@ import com.fullmugu.nanumeal.api.entity.favorite.Favorite;
 import com.fullmugu.nanumeal.api.entity.history.History;
 import com.fullmugu.nanumeal.api.entity.thkmsg.ThkMsg;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,9 +59,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @CreatedDate
-    @Column(name = "regdate", updatable = false)
-    private LocalDateTime regDate;
+    @CreationTimestamp
+    private Timestamp regDate;
 
     @LastModifiedDate
     @Column(name = "moddate")

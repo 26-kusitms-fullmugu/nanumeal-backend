@@ -2,12 +2,13 @@ package com.fullmugu.nanumeal.api.service.user;
 
 
 import com.fullmugu.nanumeal.api.dto.InputUserInfoRequestDto;
-import com.fullmugu.nanumeal.api.dto.UserDTO;
+import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
 import com.fullmugu.nanumeal.exception.CUserNotFoundException;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

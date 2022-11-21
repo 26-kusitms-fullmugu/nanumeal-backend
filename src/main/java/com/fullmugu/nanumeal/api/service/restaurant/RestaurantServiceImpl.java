@@ -1,9 +1,13 @@
 package com.fullmugu.nanumeal.api.service.restaurant;
 
+import com.fullmugu.nanumeal.api.dto.menu.MenuDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantDTO;
+import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantListDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.XYDTO;
 import com.fullmugu.nanumeal.api.entity.favorite.Favorite;
 import com.fullmugu.nanumeal.api.entity.favorite.FavoriteRepository;
+import com.fullmugu.nanumeal.api.entity.menu.Menu;
+import com.fullmugu.nanumeal.api.entity.menu.MenuRepository;
 import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.api.entity.restaurant.RestaurantRepository;
 import com.fullmugu.nanumeal.api.entity.user.User;
@@ -25,26 +29,32 @@ public class RestaurantServiceImpl implements RestaurantService{
     private final RestaurantRepository restaurantRepository;
     private final FavoriteRepository favoriteRepository;
 
+    private final MenuRepository menuRepository;
+
     @Override
     public RestaurantDTO getOne(Long id, User user) {
 
         Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(()->
                 new CRestaurantNotFoundException("식당을 찾을 수 없습니다.", ErrorCode.NOT_FOUND));
 
+        List<Menu> menuList = menuRepository.findByRestaurantId(restaurant);
+
+        List<MenuDTO> menuDTOList = menuList.stream().map(menu -> MenuToDTO(menu)).collect(Collectors.toList());
+
         boolean favorite = favoriteRepository.exists(user, restaurant);
 
-        RestaurantDTO restaurantDTO = entityToDTO(restaurant, favorite);
+        RestaurantDTO restaurantDTO = entityToDTO(restaurant, favorite, menuDTOList);
 
         return restaurantDTO;
     }
 
     @Override
-    public List<RestaurantDTO> getList(XYDTO xydto, User user) {
+    public List<RestaurantListDTO> getList(XYDTO xydto, User user) {
 
         List<Restaurant> restaurantList = restaurantRepository.findAllByXY(xydto.getSwx(), xydto.getNex(), xydto.getSwy(), xydto.getNey());
-        List<RestaurantDTO> restaurantDTOList = restaurantList.stream().map(restaurant ->
+        List<RestaurantListDTO> restaurantDTOList = restaurantList.stream().map(restaurant ->
                 // 리스트를 하나씩 빼서 현재 유저가 즐겨찾기 해놓은 곳인지도 출력
-                entityToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
+                restaurantListToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
         return restaurantDTOList;
     }
 }

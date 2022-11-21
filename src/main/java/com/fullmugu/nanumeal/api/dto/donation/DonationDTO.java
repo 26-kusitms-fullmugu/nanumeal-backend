@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,7 +22,7 @@ public class DonationDTO {
     private String restaurantName;
 
     // 기부 날짜
-    private LocalDateTime donateDate;
+    private Timestamp donateDate;
 
     // 기부 금액
     private Long donatePrice;

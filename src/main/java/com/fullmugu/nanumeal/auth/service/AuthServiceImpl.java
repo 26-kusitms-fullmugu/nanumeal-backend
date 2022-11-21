@@ -13,6 +13,8 @@ import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
+import com.fullmugu.nanumeal.exception.CUserNotFoundException;
+import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

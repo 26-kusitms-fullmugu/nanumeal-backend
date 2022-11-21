@@ -40,3 +40,5 @@ out/
 src/main/resources/application-test.yml
 src/main/resources/application-deploy.yml
 src/main/resources/application-kakao.yml
+
+
