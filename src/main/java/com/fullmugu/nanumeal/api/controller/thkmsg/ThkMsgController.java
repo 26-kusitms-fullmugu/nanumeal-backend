@@ -3,7 +3,6 @@ package com.fullmugu.nanumeal.api.controller.thkmsg;
 import com.fullmugu.nanumeal.api.dto.donation.DonationDTO;
 import com.fullmugu.nanumeal.api.dto.donationAndthkmsg.DonationDTO_and_thkMsgDTO;
 import com.fullmugu.nanumeal.api.dto.thkmsg.ThkMsgDTO;
-import com.fullmugu.nanumeal.api.entity.donation.Donation;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.donation.DonationService;
 import com.fullmugu.nanumeal.api.service.thkmsg.ThkMsgService;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mypage")
+@RequestMapping("/thanks")
 @Log4j2
 public class ThkMsgController {
 
