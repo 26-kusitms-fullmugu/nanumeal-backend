@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class ThanksMessageRequestDto {
 
-    private String childNickName;
-
     private String restaurantName;
 
     private String restaurantLocation;
