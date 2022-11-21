@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.api.controller;
+package com.fullmugu.nanumeal.api.controller.user;
 
 import com.fullmugu.nanumeal.api.dto.user.InputUserInfoRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserInfoResponseDto;
