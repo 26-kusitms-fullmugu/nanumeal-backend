@@ -14,8 +14,8 @@ import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +44,7 @@ public class ThkMsgServiceImpl implements ThkMsgService {
     }
 
     @Override
+    @Transactional
     public ThkMsg makeThankMessage(ThanksMessageRequestDto thanksMessageRequestDto, User user) {
         if (user == null) {
             throw new CUserNotFoundException("유효하지 않은 사용자입니다.", ErrorCode.FORBIDDEN);
