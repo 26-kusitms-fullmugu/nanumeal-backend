@@ -44,6 +44,7 @@ import java.util.Random;
 public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
     private final JavaMailSender javaMailSender;
@@ -270,6 +271,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String sendSimpleMessage(String to) throws Exception {
+        checkEmailDuplication(to);
 
         ePw = createKey(); // 랜덤 인증번호 생성
 
