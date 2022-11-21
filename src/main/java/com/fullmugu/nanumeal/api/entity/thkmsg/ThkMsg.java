@@ -32,13 +32,15 @@ public class ThkMsg {
     @JsonIgnore
     private Restaurant resId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
+    private String feeling;
+
+    @Column(length = 255)
     private String message;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime regDate;
-
 
 
 }
