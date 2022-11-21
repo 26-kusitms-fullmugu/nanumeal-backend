@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: my_spring_boot_app
 
   h2:
     console:
@@ -7,11 +9,11 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nanumeal?serverTimezone=Asia/Seoul
-    username: nanumeal
-    password: 1234
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/nanumeal?serverTimezone=Asia/Seoul
+#    username: nanumeal
+#    password: 1234
 #    url: jdbc:h2:mem:testdb
 #    driver-class-name: org.h2.Driver
 #    username: sa
@@ -27,21 +29,24 @@ spring:
     hibernate: # hibernate 사용 설정
 
       # 애플리케이션 실행 시점에 테이블을 다 지우고, 내가 가진 entity 정보를 보고 다시 테이블 자동 생성
-    #      ddl-auto: create
+      ddl-auto: update
     properties: # property 사용 설정
       hibernate: # hibernate property 설정
         format_sql: true
         use_sql_comments: true
     show-sql: true
     open-in-view: true
+#    database-platform: org.hibernate.dialect.H2Dialect
+
+
 
 
   config:
     import:
       - classpath:/application-kakao.yml
       - classpath:/application-test.yml
-    activate:
-      on-profile: local
+#    activate:
+#      on-profile: local
 
 # 로그 레벨 설정
 logging:
