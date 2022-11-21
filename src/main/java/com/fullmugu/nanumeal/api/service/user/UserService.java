@@ -1,7 +1,7 @@
 package com.fullmugu.nanumeal.api.service.user;
 
 
-import com.fullmugu.nanumeal.api.dto.InputUserInfoRequestDto;
+import com.fullmugu.nanumeal.api.dto.user.InputUserInfoRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 
@@ -22,9 +22,7 @@ public interface UserService {
     default UserDTO entityToDto(User user) {
         UserDTO userDTO = UserDTO.builder()
                 .age(user.getAge())
-                .passWord(user.getPassword())
                 .name(user.getName())
-                .userId(user.getLoginId())
                 .email(user.getEmail())
                 .nickName(user.getNickName())
                 .type(user.getType())

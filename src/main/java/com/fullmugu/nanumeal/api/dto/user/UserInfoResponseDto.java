@@ -1,4 +1,4 @@
-package com.fullmugu.nanumeal.api.dto;
+package com.fullmugu.nanumeal.api.dto.user;
 
 import com.fullmugu.nanumeal.api.entity.user.Role;
 import com.fullmugu.nanumeal.api.entity.user.Type;

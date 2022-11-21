@@ -4,15 +4,14 @@ import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class CRestaurantNotFoundException extends RuntimeException{
-
+public class CDuplicateLoginIdException extends RuntimeException {
     private ErrorCode errorCode;
 
-    public CRestaurantNotFoundException(String msg){
+    public CDuplicateLoginIdException(String msg) {
         super(msg);
     }
 
-    public CRestaurantNotFoundException(String msg, ErrorCode errorCode){
+    public CDuplicateLoginIdException(String msg, ErrorCode errorCode) {
         super(msg);
         this.errorCode = errorCode;
     }

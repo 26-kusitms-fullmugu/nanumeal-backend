@@ -1,18 +1,15 @@
 package com.fullmugu.nanumeal.exception;
 
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
-import lombok.Getter;
 
-@Getter
-public class CRestaurantNotFoundException extends RuntimeException{
-
+public class CDeletionFailException extends RuntimeException {
     private ErrorCode errorCode;
 
-    public CRestaurantNotFoundException(String msg){
+    public CDeletionFailException(String msg) {
         super(msg);
     }
 
-    public CRestaurantNotFoundException(String msg, ErrorCode errorCode){
+    public CDeletionFailException(String msg, ErrorCode errorCode) {
         super(msg);
         this.errorCode = errorCode;
     }
