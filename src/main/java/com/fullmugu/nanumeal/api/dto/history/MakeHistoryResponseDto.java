@@ -4,6 +4,7 @@ import com.fullmugu.nanumeal.api.entity.history.History;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -11,10 +12,10 @@ public class MakeHistoryResponseDto {
 
     private Long usePrice;
 
-    private LocalDateTime regDate;
+    private Timestamp regDate;
 
     @Builder
-    public MakeHistoryResponseDto(Long usePrice, LocalDateTime regDate) {
+    public MakeHistoryResponseDto(Long usePrice, Timestamp regDate) {
         this.usePrice = usePrice;
         this.regDate = regDate;
     }

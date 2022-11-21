@@ -4,6 +4,7 @@ import com.fullmugu.nanumeal.api.entity.donation.Donation;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -11,12 +12,12 @@ public class MakeDonationResponseDto {
 
     private Long donPrice;
 
-    private LocalDateTime regDate;
+    private Timestamp regDate;
 
     private Boolean isThanked;
 
     @Builder
-    public MakeDonationResponseDto(Long donPrice, LocalDateTime regDate, Boolean isThanked) {
+    public MakeDonationResponseDto(Long donPrice, Timestamp regDate, Boolean isThanked) {
         this.donPrice = donPrice;
         this.regDate = regDate;
         this.isThanked = isThanked;

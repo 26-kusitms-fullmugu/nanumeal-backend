@@ -53,7 +53,7 @@ public class DonationServiceImpl implements DonationService {
                         .donateUserId(user)
                         .restaurantId(restaurant)
                         .donPrice(makeDonationRequestDto.getMoney())
-                        .regDate(LocalDateTime.now())
+//                        .regDate(LocalDateTime.now())
                         .isThanked(false)
                         .build()
         );

@@ -60,7 +60,7 @@ public class ThkMsgServiceImpl implements ThkMsgService {
                         .resId(restaurant)
                         .feeling(thanksMessageRequestDto.getFeeling())
                         .message(thanksMessageRequestDto.getMessage())
-                        .regDate(LocalDateTime.now())
+//                        .regDate(LocalDateTime.now())
                         .build()
         );
     }

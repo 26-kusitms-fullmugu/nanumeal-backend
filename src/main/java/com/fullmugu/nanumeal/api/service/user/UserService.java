@@ -21,6 +21,7 @@ public interface UserService {
 
     default UserDTO entityToDto(User user) {
         UserDTO userDTO = UserDTO.builder()
+                .userId(user.getLoginId())
                 .age(user.getAge())
                 .name(user.getName())
                 .email(user.getEmail())

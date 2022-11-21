@@ -61,7 +61,7 @@ public class HistoryServiceImpl implements HistoryService{
                         .userId(user)
                         .restaurantId(restaurant)
                         .usePrice(makeHistoryRequestDto.getMoney())
-                        .regDate(LocalDateTime.now())
+//                        .regDate(LocalDateTime.now())
                         .build()
         );
     }
