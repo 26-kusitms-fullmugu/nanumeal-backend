@@ -1,7 +1,9 @@
 package com.fullmugu.nanumeal.exception;
 
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public class CDuplicateLoginIdException extends RuntimeException {
     private ErrorCode errorCode;
 
