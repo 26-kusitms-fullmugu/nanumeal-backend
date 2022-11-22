@@ -25,8 +25,6 @@ public class UserDTO {
 
     private String name;
 
-    private String passWord;
-
     private Long age;
 
     private String location;

@@ -6,9 +6,11 @@ import com.fullmugu.nanumeal.api.entity.history.History;
 import com.fullmugu.nanumeal.api.entity.menu.Menu;
 import com.fullmugu.nanumeal.api.entity.thkmsg.ThkMsg;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +36,8 @@ public class Restaurant {
     @Column(nullable = false, length = 255)
     private String information;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime regDate;
+    @CreationTimestamp
+    private Timestamp regDate;
 
     @Column(nullable = false)
     private Long remainDon;

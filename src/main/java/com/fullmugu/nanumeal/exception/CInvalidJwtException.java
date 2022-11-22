@@ -4,14 +4,15 @@ import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class CAuthorizationCodeInvalidException extends RuntimeException {
+public class CInvalidJwtException extends RuntimeException {
+
     private ErrorCode errorCode;
 
-    public CAuthorizationCodeInvalidException(String msg) {
+    public CInvalidJwtException(String msg) {
         super(msg);
     }
 
-    public CAuthorizationCodeInvalidException(String msg, ErrorCode errorCode) {
+    public CInvalidJwtException(String msg, ErrorCode errorCode) {
         super(msg);
         this.errorCode = errorCode;
     }

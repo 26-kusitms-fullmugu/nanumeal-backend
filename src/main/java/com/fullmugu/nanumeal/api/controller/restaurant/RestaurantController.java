@@ -1,6 +1,7 @@
 package com.fullmugu.nanumeal.api.controller.restaurant;
 
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantDTO;
+import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantListDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.XYDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.restaurant.RestaurantService;
@@ -29,8 +30,8 @@ public class RestaurantController {
 
     // 위도 경도 계산해서 여러개 불러오기
     @GetMapping("/list")
-    public ResponseEntity<List<RestaurantDTO>> getList(@RequestBody XYDTO xydto, @AuthenticationPrincipal User user){
-        List<RestaurantDTO> restaurantDTOList = restaurantService.getList(xydto, user);
+    public ResponseEntity<List<RestaurantListDTO>> getList(@RequestBody XYDTO xydto, @AuthenticationPrincipal User user){
+        List<RestaurantListDTO> restaurantDTOList = restaurantService.getList(xydto, user);
         return ResponseEntity.ok(restaurantDTOList);
     }
 

@@ -4,9 +4,11 @@ import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,13 +34,14 @@ public class ThkMsg {
     @JsonIgnore
     private Restaurant resId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
+    private String feeling;
+
+    @Column(length = 255)
     private String message;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime regDate;
-
+    @CreationTimestamp
+    private Timestamp regDate;
 
 
 }
