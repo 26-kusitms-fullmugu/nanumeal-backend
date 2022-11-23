@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullmugu.nanumeal.api.entity.user.Role;
-import com.fullmugu.nanumeal.api.entity.user.Type;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
 import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
@@ -63,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
     private String ePw;
 
-    public String saveUserAndGetToken(String token, Type type) {
+    public String saveUserAndGetToken(String token) {
         KakaoProfileDto profile = findProfile(token);
 
         User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
@@ -72,7 +71,6 @@ public class AuthServiceImpl implements AuthService {
                     .kakaoId(profile.getId())
                     .name(profile.getKakao_account().getProfile().getNickname())
                     .password("Kakao" + profile.getId())
-                    .type(type)
                     .email(profile.getKakao_account().getEmail())
                     .role(Role.ROLE_USER)
                     .provider("Kakao")
