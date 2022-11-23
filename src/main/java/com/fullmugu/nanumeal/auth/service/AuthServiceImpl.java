@@ -122,7 +122,7 @@ public class AuthServiceImpl implements AuthService {
 
         User verifyUser = userRepository.findByEmail(kakaoSignupRequestDto.getEmail());
 
-        if (getUser.isPresent()) {
+        if (getUser.isPresent() && verifyUser != null) {
             if (!Objects.equals(getUser.get().getKakaoId(), verifyUser.getKakaoId())) {
                 throw new CDuplicateEmailException("이미 가입된 이메일입니다. 아이디 및 비밀번호로 로그인해주세요.", ErrorCode.BAD_REQUEST);
             }
