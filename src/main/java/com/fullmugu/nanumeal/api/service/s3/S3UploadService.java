@@ -40,7 +40,8 @@ public class S3UploadService {
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(multipartFile.getInputStream().available());
 
-        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
+        amazonS3.putObject(new PutObjectRequest(bucket, s3FileName, multipartFile.getInputStream(), objMeta)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
 
         return amazonS3.getUrl(bucket, s3FileName).toString();
     }
