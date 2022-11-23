@@ -1,5 +1,6 @@
 package com.fullmugu.nanumeal.api.controller.restaurant;
 
+import com.fullmugu.nanumeal.api.dto.restaurant.DistanceXYDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantListDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.XYDTO;
@@ -35,6 +36,26 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantDTOList);
     }
 
+    //후원 금액순으로 불러오기
+    @GetMapping("/list/donate")
+    public ResponseEntity<List<RestaurantListDTO>> getListOrderByDonate(@AuthenticationPrincipal User user){
+        List<RestaurantListDTO> restaurantListDTOList = restaurantService.getListOrderByDonate(user);
+        return ResponseEntity.ok(restaurantListDTOList);
+    }
 
+    //후원 금액이 메뉴의 최소 금액보다 낮은 애들을 불러오기, 남은 금액 순
+    @GetMapping("/list/remainDon")
+    public ResponseEntity<List<RestaurantListDTO>> getListByMenuPrice(@AuthenticationPrincipal User user){
+        List<RestaurantListDTO> restaurantListDTOList = restaurantService.getListByMenuPrice(user);
+        return ResponseEntity.ok(restaurantListDTOList);
+    }
+
+    //거리순으로 뽑기
+    @GetMapping("/list/distance")
+    public ResponseEntity<List<RestaurantListDTO>> getListByDistance(@AuthenticationPrincipal User user, @RequestBody DistanceXYDTO distanceXYDTO){
+        log.info("con:::"+ distanceXYDTO);
+        List<RestaurantListDTO> restaurantListDTOList = restaurantService.getListByDistance(user, distanceXYDTO);
+        return ResponseEntity.ok(restaurantListDTOList);
+    }
 
 }
