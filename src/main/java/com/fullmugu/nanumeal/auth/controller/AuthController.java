@@ -1,6 +1,5 @@
 package com.fullmugu.nanumeal.auth.controller;
 
-import com.fullmugu.nanumeal.api.entity.user.Type;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.s3.S3UploadService;
 import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
@@ -25,14 +24,14 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/token")
-    public ResponseEntity<String> getLogin(@RequestParam("code") String code, @RequestParam("type") Type type) { //(1)
+    public ResponseEntity<String> getLogin(@RequestParam("code") String code) { //(1)
 
         // 넘어온 인가 코드를 통해 access_token 발급
         OAuthToken oAuthToken = authService.getAccessToken(code);
 
         //(2)
         // 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장 후 JWT 를 생성
-        String jwtToken = authService.saveUserAndGetToken(oAuthToken.getAccess_token(), type);
+        String jwtToken = authService.saveUserAndGetToken(oAuthToken.getAccess_token());
 
         //(3)
         HttpHeaders headers = new HttpHeaders();
