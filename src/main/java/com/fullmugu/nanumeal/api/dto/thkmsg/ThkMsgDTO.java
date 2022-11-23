@@ -14,6 +14,8 @@ public class ThkMsgDTO {
     //보내는 결식 아동
     private String childName;
 
+    private String feeling;
+
     //먹은 식당 이름
     private String restaurantName;
 
