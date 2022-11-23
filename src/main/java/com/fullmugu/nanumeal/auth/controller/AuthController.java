@@ -4,6 +4,7 @@ import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.s3.S3UploadService;
 import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
 import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
+import com.fullmugu.nanumeal.auth.dto.KakaoSignupRequestDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.service.AuthService;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
@@ -45,6 +46,17 @@ public class AuthController {
     public ResponseEntity<String> formSignUp(@RequestBody FormSignupRequestDto formSignupRequestDto) {
 
         String jwtToken = authService.saveUserAndGetToken(formSignupRequestDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+
+        return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @PostMapping("/login/kakao")
+    public ResponseEntity<String> kakaoSignUp(@RequestBody KakaoSignupRequestDto kakaoSignupRequestDto) {
+
+        String jwtToken = authService.saveUserAndGetToken(kakaoSignupRequestDto);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
