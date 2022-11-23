@@ -2,6 +2,7 @@ package com.fullmugu.nanumeal.auth.controller;
 
 import com.fullmugu.nanumeal.api.entity.user.Type;
 import com.fullmugu.nanumeal.api.entity.user.User;
+import com.fullmugu.nanumeal.api.service.s3.S3UploadService;
 import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
 import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
@@ -11,12 +12,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
+    private final S3UploadService s3UploadService;
     private final AuthService authService;
 
     @GetMapping("/token")
@@ -79,5 +84,12 @@ public class AuthController {
     @PostMapping("/verify/email")
     public ResponseEntity<String> verifyEmail(@RequestBody String email) {
         return ResponseEntity.ok().body(authService.checkEmailDuplication(email));
+    }
+
+    @PostMapping("/document")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        return ResponseEntity.ok(
+                s3UploadService.upload(multipartFile)
+        );
     }
 }
