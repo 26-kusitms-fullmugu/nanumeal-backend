@@ -1,6 +1,7 @@
 package com.fullmugu.nanumeal.api.service.restaurant;
 
 import com.fullmugu.nanumeal.api.dto.menu.MenuDTO;
+import com.fullmugu.nanumeal.api.dto.restaurant.DistanceXYDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.RestaurantListDTO;
 import com.fullmugu.nanumeal.api.dto.restaurant.XYDTO;
@@ -49,6 +50,15 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
+    public List<RestaurantListDTO> getListOrderByDonate(User user) {
+        List<Restaurant> restaurantList = restaurantRepository.findAllOrderByRemainDon();
+        List<RestaurantListDTO> restaurantListDTOList = restaurantList.stream().map(
+                restaurant -> restaurantListToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
+
+        return restaurantListDTOList;
+    }
+
+    @Override
     public List<RestaurantListDTO> getList(XYDTO xydto, User user) {
 
         List<Restaurant> restaurantList = restaurantRepository.findAllByXY(xydto.getSwx(), xydto.getNex(), xydto.getSwy(), xydto.getNey());
@@ -56,5 +66,22 @@ public class RestaurantServiceImpl implements RestaurantService{
                 // 리스트를 하나씩 빼서 현재 유저가 즐겨찾기 해놓은 곳인지도 출력
                 restaurantListToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
         return restaurantDTOList;
+    }
+
+    @Override
+    public List<RestaurantListDTO> getListByMenuPrice(User user) {
+        List<Restaurant> restaurantList = restaurantRepository.findAllByMenuPrice();
+        List<RestaurantListDTO> restaurantListDTOList = restaurantList.stream().map(restaurant ->
+                restaurantListToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
+        return restaurantListDTOList;
+    }
+
+    @Override
+    public List<RestaurantListDTO> getListByDistance(User user, DistanceXYDTO distanceXYDTO) {
+        log.info("res:::"+distanceXYDTO.getX(), distanceXYDTO.getY());
+        List<Restaurant> restaurantList = restaurantRepository.findAllByDistance(distanceXYDTO.getX(), distanceXYDTO.getY());
+        List<RestaurantListDTO> restaurantListDTOList = restaurantList.stream().map(restaurant ->
+                restaurantListToDTO(restaurant, favoriteRepository.exists(user, restaurant))).collect(Collectors.toList());
+        return restaurantListDTOList;
     }
 }
