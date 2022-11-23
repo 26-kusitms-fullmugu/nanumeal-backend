@@ -1,6 +1,7 @@
 package com.fullmugu.nanumeal.api.controller.user;
 
 import com.fullmugu.nanumeal.api.dto.user.InputUserInfoRequestDto;
+import com.fullmugu.nanumeal.api.dto.user.InputUserTypeRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserInfoResponseDto;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.user.UserService;
@@ -25,6 +26,11 @@ public class UserController {
     @PutMapping("/info")
     public ResponseEntity<UserInfoResponseDto> inputUserInfo(@AuthenticationPrincipal User user, @RequestBody InputUserInfoRequestDto inputUserInfoRequestDto) {
         return ResponseEntity.ok().body(UserInfoResponseDto.from(userService.setUserInfo(user, inputUserInfoRequestDto)));
+    }
+
+    @PostMapping("/type")
+    public ResponseEntity<UserInfoResponseDto> inputUserType(@AuthenticationPrincipal User user, @RequestBody InputUserTypeRequestDto inputUserTypeRequestDto) {
+        return ResponseEntity.ok().body(UserInfoResponseDto.from(userService.setUserType(user, inputUserTypeRequestDto)));
     }
 
     @DeleteMapping("/info")

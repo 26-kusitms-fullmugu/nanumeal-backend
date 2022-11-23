@@ -1,8 +1,6 @@
 package com.fullmugu.nanumeal.api.entity.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 
 import java.util.Optional;
 
@@ -14,6 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByLoginId(String loginId);
 
     Optional<User> findByNickName(String nickName);
+
+    Optional<User> findByKakaoIdAndEmail(Long kakaoId, String email);
 
     void deleteUserById(Long id);
 }

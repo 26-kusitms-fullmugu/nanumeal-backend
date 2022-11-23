@@ -5,12 +5,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullmugu.nanumeal.api.entity.user.Role;
-import com.fullmugu.nanumeal.api.entity.user.Type;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
 import com.fullmugu.nanumeal.auth.dto.FormLoginRequestDto;
 import com.fullmugu.nanumeal.auth.dto.FormSignupRequestDto;
 import com.fullmugu.nanumeal.auth.dto.KakaoProfileDto;
+import com.fullmugu.nanumeal.auth.dto.KakaoSignupRequestDto;
 import com.fullmugu.nanumeal.auth.jwt.JwtProperties;
 import com.fullmugu.nanumeal.auth.token.OAuthToken;
 import com.fullmugu.nanumeal.exception.*;
@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
 
     private String ePw;
 
-    public String saveUserAndGetToken(String token, Type type) {
+    public String saveUserAndGetToken(String token) {
         KakaoProfileDto profile = findProfile(token);
 
         User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
@@ -72,7 +72,6 @@ public class AuthServiceImpl implements AuthService {
                     .kakaoId(profile.getId())
                     .name(profile.getKakao_account().getProfile().getNickname())
                     .password("Kakao" + profile.getId())
-                    .type(type)
                     .email(profile.getKakao_account().getEmail())
                     .role(Role.ROLE_USER)
                     .provider("Kakao")
@@ -113,6 +112,32 @@ public class AuthServiceImpl implements AuthService {
         userRepository.saveAndFlush(user);
 
         return createToken(user); //(2)
+    }
+
+    @Override
+    public String saveUserAndGetToken(KakaoSignupRequestDto kakaoSignupRequestDto) {
+
+        Optional<User> getUser = userRepository.findByKakaoIdAndEmail(kakaoSignupRequestDto.getKakaoId(), kakaoSignupRequestDto.getEmail());
+        if (getUser.isPresent()) {
+            return createToken(getUser.get());
+        } else {
+            User user = User
+                    .oauth2Register()
+                    .role(Role.ROLE_USER)
+                    .kakaoId(kakaoSignupRequestDto.getKakaoId())
+                    .name(kakaoSignupRequestDto.getName())
+                    .email(kakaoSignupRequestDto.getEmail())
+                    .provider("Kakao")
+                    .password("Kakao" + kakaoSignupRequestDto.getKakaoId())
+                    .build();
+
+            userRepository.save(user);
+            user.generatePassword();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.saveAndFlush(user);
+            return createToken(user); //(2)
+        }
+
     }
 
     @Override
