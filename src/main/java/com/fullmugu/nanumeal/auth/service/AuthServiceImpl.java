@@ -52,6 +52,15 @@ public class AuthServiceImpl implements AuthService {
     @Value("${jwt.secret}")
     private String SECRET;
 
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    private String CLIENT_ID;
+
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    private String REDIRECT_URI;
+
+    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+    private String CLIENT_SECRET;
+
     private String ePw;
 
     public String saveUserAndGetToken(String token, Type type) {
@@ -178,10 +187,10 @@ public class AuthServiceImpl implements AuthService {
         //(4)
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "d041b6f16d3bc4f0a3bc384015073302");
-        params.add("redirect_uri", "http://localhost:8080/login/oauth2/code/kakao");
+        params.add("client_id", CLIENT_ID);
+        params.add("redirect_uri", REDIRECT_URI);
         params.add("code", code);
-        params.add("client_secret", "vZgr0RMvRVWSsMHG7WnZbs7jyZSuA9Zy"); // 생략 가능!
+        params.add("client_secret", CLIENT_SECRET); // 생략 가능!
 
         //(5)
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
