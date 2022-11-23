@@ -16,6 +16,7 @@ public interface ThkMsgService {
 
     default ThkMsgDTO entityToDTO(ThkMsg thkMsg) {
         ThkMsgDTO thkMsgDTO = ThkMsgDTO.builder()
+                .feeling(thkMsg.getFeeling())
                 .childName(thkMsg.getChildId().getName())
                 .restaurantName(thkMsg.getResId().getName())
                 .content(thkMsg.getMessage())

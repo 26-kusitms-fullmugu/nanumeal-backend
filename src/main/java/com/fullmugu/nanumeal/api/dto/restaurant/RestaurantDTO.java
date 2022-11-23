@@ -18,6 +18,8 @@ public class RestaurantDTO {
 
     private String location;
 
+    private Long remain_don;
+
     private boolean GoB;
 
     private String information;
