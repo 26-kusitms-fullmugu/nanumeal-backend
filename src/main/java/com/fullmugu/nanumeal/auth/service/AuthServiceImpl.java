@@ -187,15 +187,21 @@ public class AuthServiceImpl implements AuthService {
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
                 new HttpEntity<>(params, headers);
 
+        ResponseEntity<String> accessTokenResponse = null;
         //(6)
-        ResponseEntity<String> accessTokenResponse = rt.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                kakaoTokenRequest,
-                String.class
-        );
+        try {
+            accessTokenResponse = rt.exchange(
+                    "https://kauth.kakao.com/oauth/token",
+                    HttpMethod.POST,
+                    kakaoTokenRequest,
+                    String.class
+            );
+        } catch (RuntimeException e) {
+            throw new CAuthorizationCodeInvalidException("인가 코드가 유효하지 않습니다.", ErrorCode.BAD_REQUEST);
+        }
 
-        if (accessTokenResponse.getStatusCodeValue() == 400) {
+
+        if (accessTokenResponse.getStatusCodeValue() != 200) {
             throw new CAuthorizationCodeInvalidException("인가 코드가 유효하지 않습니다.", ErrorCode.BAD_REQUEST);
         }
 

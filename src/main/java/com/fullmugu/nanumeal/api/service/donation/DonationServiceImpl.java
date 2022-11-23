@@ -8,13 +8,13 @@ import com.fullmugu.nanumeal.api.entity.restaurant.Restaurant;
 import com.fullmugu.nanumeal.api.entity.restaurant.RestaurantRepository;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.exception.CRestaurantNotFoundException;
+import com.fullmugu.nanumeal.exception.CUserNotFoundException;
 import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +40,9 @@ public class DonationServiceImpl implements DonationService {
     @Transactional
     @Override
     public Donation makeDonation(MakeDonationRequestDto makeDonationRequestDto, User user) {
+        if (user == null) {
+            throw new CUserNotFoundException("유효하지 않은 사용자입니다.", ErrorCode.FORBIDDEN);
+        }
 
         Restaurant restaurant = restaurantRepository
                 .findByNameAndLocation(makeDonationRequestDto.getName(), makeDonationRequestDto.getLocation())

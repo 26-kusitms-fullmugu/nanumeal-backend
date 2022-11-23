@@ -67,4 +67,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
     }
 
+    @ExceptionHandler(CInvalidJwtException.class)
+    public ResponseEntity<ErrorResponse> CInvalidJwtException(CInvalidJwtException ex) {
+        ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+        response.setMessage(ex.getMessage());
+        log.error("Unexpected Exception occurred: {}", ex.getMessage(), ex);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    }
 }

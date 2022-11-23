@@ -6,6 +6,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.service.user.UserService;
+import com.fullmugu.nanumeal.exception.CInvalidJwtException;
+import com.fullmugu.nanumeal.exception.handler.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,22 +54,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     .getClaim("id").asLong();
         } catch (TokenExpiredException e) {
             log.info("토큰 만료");
-            e.printStackTrace();
-            request.setAttribute(JwtProperties.HEADER_STRING, "토큰이 만료되었습니다.");
+            throw new CInvalidJwtException("만료된 토큰입니다.", ErrorCode.FORBIDDEN);
         } catch (JWTVerificationException e) {
             log.info("토큰 유효 X");
-            e.printStackTrace();
-            request.setAttribute(JwtProperties.HEADER_STRING, "유효하지 않은 토큰입니다.");
+            throw new CInvalidJwtException("유효하지 않은 토큰입니다.", ErrorCode.FORBIDDEN);
         }
 
         if (id == null) {
             log.info("id 값이 존재하지 않습니다.");
+            throw new CInvalidJwtException("유효하지 않은 토큰입니다.", ErrorCode.FORBIDDEN);
         }
 
         // Service를 통해 id값이 존재하는지 검증
         else if (userService.getUserById(id) == null) {
             log.info(id + "번 사용자는 존재하지 않습니다.");
-            request.setAttribute(JwtProperties.HEADER_STRING, "존재하지 않는 사용자입니다.");
+            throw new CInvalidJwtException("존재하지 않는 사용자입니다.", ErrorCode.FORBIDDEN);
         } else {
             request.setAttribute("id", id);
             User user = userService.getUserById(id);
