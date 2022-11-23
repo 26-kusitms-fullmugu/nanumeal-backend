@@ -2,6 +2,7 @@ package com.fullmugu.nanumeal.api.service.user;
 
 
 import com.fullmugu.nanumeal.api.dto.user.InputUserInfoRequestDto;
+import com.fullmugu.nanumeal.api.dto.user.InputUserTypeRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 
@@ -12,6 +13,8 @@ public interface UserService {
     User getUserFromReq(HttpServletRequest request);
 
     User setUserInfo(User user, InputUserInfoRequestDto inputUserInfoRequestDto);
+
+    User setUserType(User user, InputUserTypeRequestDto inputUserTypeRequestDto);
 
     String deleteUser(User user);
 

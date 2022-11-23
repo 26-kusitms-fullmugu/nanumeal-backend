@@ -2,6 +2,7 @@ package com.fullmugu.nanumeal.api.service.user;
 
 
 import com.fullmugu.nanumeal.api.dto.user.InputUserInfoRequestDto;
+import com.fullmugu.nanumeal.api.dto.user.InputUserTypeRequestDto;
 import com.fullmugu.nanumeal.api.dto.user.UserDTO;
 import com.fullmugu.nanumeal.api.entity.user.User;
 import com.fullmugu.nanumeal.api.entity.user.UserRepository;
@@ -37,6 +38,14 @@ public class UserServiceImpl implements UserService {
         user.setNickName(inputUserInfoRequestDto.getNickName());
         user.setAge(inputUserInfoRequestDto.getAge());
         user.setLocation(inputUserInfoRequestDto.getLocation());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public User setUserType(User user, InputUserTypeRequestDto inputUserTypeRequestDto) {
+        user.setType(inputUserTypeRequestDto.getType());
 
         return userRepository.save(user);
     }
