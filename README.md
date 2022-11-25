@@ -38,7 +38,7 @@
 ![image](https://user-images.githubusercontent.com/86938974/203930665-992347d9-dbef-4c65-a186-89a38a7f6e46.png)
 
 ## 서버 모니터링
-
+![Server Monitoring](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f9c12fd8-ad05-485d-91ee-46f09570e2e7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221125%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221125T085051Z&X-Amz-Expires=86400&X-Amz-Signature=157da2616b988b6c2fd11516504290b1d38ffb29b4cbc83630f08905497743eb&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
 
 ## CI / CD 과정
 ![CICD_Architecture](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fa34f9ef-4154-40ae-8112-ca1807620b81/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221125%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221125T075043Z&X-Amz-Expires=86400&X-Amz-Signature=da92d705bc24f39fb332bbe77d0b25ffdb7eb1ac438296d6a1707058302c7f81&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
