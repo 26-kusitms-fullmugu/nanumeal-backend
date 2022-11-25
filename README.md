@@ -39,14 +39,16 @@
 - `AWS EC2`를 이용해 서버를 배포하였고, `AWS RDS`를 이용해 DB 서버를 구성하였습니다.<br>
 - `AWS S3`를 이용해 이미지 데이터를 관리하였습니다.<br>
 - `Prometheus`를 이용해 서버의 데이터 로그를 수집하고, `Grafana`를 이용해 데이터를 시각화하였습니다. <br>
-- `Springboot`로 구축한 API 서버와 `Android`를 연결하고 배포하기 위해서 Nginx를 사용해보았습니다. <br>
+- `Springboot`로 구축한 API 서버와 `Android`를 연결하고 무중단 배포하기 위해서 Nginx를 사용했습니다. <br>
 - API문서 자동화를 통해 테스트를 쉽고 편하게 하기 위해 `Swagger`를 사용했습니다. <br>
-- 협업 및 코드 버전 관리를 위해 `github`을 이용하였으며 <br>
-- 자동 배포를 위해 `github actions`를 이용하였습니다. <br>
+- 협업 및 코드 버전 관리를 위해 `Github`을 이용하였으며 <br>
+- 자동 배포를 위해 `Github actions`를 이용하였습니다. <br>
  
 ## 시스템 아키텍처
 ![System Architecture](https://user-images.githubusercontent.com/86938974/203930665-992347d9-dbef-4c65-a186-89a38a7f6e46.png)
-Spring Boot의 하위 프레임워크인 Spring Security, Spring Data JPA를 사용하여 서버를 구성하였습니다. Spring Security에서 제공하는 Filter Chain에 JWT를 사용하는 Custom Filter를 추가하여 로그인 기능을 구현하였습니다. 이 때 소셜 로그인을 구현하기 위해 Kakao API를 사용했고, 폼 로그인을 구현하기 위해 이메일 전송 라이브러리를 사용했습니다. 클라이언트에서 요청하는 CRUD 연산을 수행하기 위해 MySQL을 사용하였고, 객체와 RDBMS를 쉽게 맵핑하고자 JPA, Hibernate, Spring Data JPA를 사용했습니다.
+- Spring Security에서 제공하는 Filter Chain에 JWT를 사용하는 Custom Filter를 추가하여 로그인 기능을 구현하였습니다.
+- 이 때 소셜 로그인을 구현하기 위해 Kakao API를 사용했고, 폼 로그인을 구현하기 위해 이메일 전송 라이브러리를 사용했습니다.
+- 객체와 RDBMS를 쉽게 맵핑하고자 JPA, Hibernate, Spring Data JPA를 사용했습니다.
 
 
 ## 서버 모니터링
