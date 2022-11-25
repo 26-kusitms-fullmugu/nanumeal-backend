@@ -33,12 +33,12 @@
 ## 기술 스택
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" alt="icon" /> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white"> <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"> <img src="https://img.shields.io/badge/AWS S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"> <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white"> <img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white"> <img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=Grafana&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white">
 
-Springboot(Java)를 이용한 API 서버를 개발하였고, JPA(ORM)과 MySQL을 이용한 CRUD 구현하였습니다.
-AWS EC2를 이용해 서버를 배포하였고, AWS RDS를 이용해 DB 서버를 구성하였습니다.
-AWS S3를 이용해 이미지 데이터를 관리하였습니다.
-Prometheus를 이용해 서버의 데이터 로그를 수집하고, Grafana를 이용해 데이터를 시각화하였습니다.
-협업 및 코드 버전 관리를 위해 github을 이용하였으며
-자동 배포를 위해 github actions를 이용하였습니다.
+`Springboot(Java)`를 이용한 API 서버를 개발하였고, JPA(ORM)과 `MySQL`을 이용한 CRUD 구현하였습니다.<br>
+`AWS EC2`를 이용해 서버를 배포하였고, `AWS RDS`를 이용해 DB 서버를 구성하였습니다.<br>
+`AWS S3`를 이용해 이미지 데이터를 관리하였습니다.
+`Prometheus`를 이용해 서버의 데이터 로그를 수집하고, `Grafana`를 이용해 데이터를 시각화하였습니다.
+협업 및 코드 버전 관리를 위해 `github`을 이용하였으며
+자동 배포를 위해 `github actions`를 이용하였습니다.
  
 ## 시스템 아키텍처
 
