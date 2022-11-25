@@ -41,3 +41,12 @@
 
 
 ## CI / CD 과정
+![CICD_Architecture](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fa34f9ef-4154-40ae-8112-ca1807620b81/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221125%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221125T075043Z&X-Amz-Expires=86400&X-Amz-Signature=da92d705bc24f39fb332bbe77d0b25ffdb7eb1ac438296d6a1707058302c7f81&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+
+1. Git Flow에 따라 기능 구현
+2. dev 브랜치에 Pull Request를 보내 코드를 merge
+3. merge된 코드가 잘 작동되는 것을 확인 후 master 브랜치에 Pull Request를 보내 merge
+4. 코드가 merge되면 Github Actions에서 프로젝트를 빌드 후 해당 JAR 파일을 AWS S3에 전달
+5. Github Actions에서 CodeDeploy에 해당 JAR 파일을 배포하도록 전달
+6. CodeDeploy는 EC2 서버에 있는 CodeDeploy Agent가 S3 버킷에서 JAR 파일을 받아와 주어진 쉘 스크립트에 따라 배포를 진행하도록 함
+7. 새로운 Spring Boot WAS를 띄운 뒤, Nginx 스위칭을 통해 무중단 배포를 진행
